@@ -1,0 +1,1209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Refer & Earn</title>
+
+<style>
+:root{
+  --color-primary:#2563EB;--color-primary-hover:#1D4ED8;--color-primary-soft:#EFF6FF;
+  --color-secondary:#14B8A6;--color-secondary-soft:#CCFBF1;--color-background:#F8FAFC;
+  --color-surface:#FFFFFF;--text-primary:#0F172A;--text-secondary:#334155;
+  --text-muted:#64748B;--border-light:#E2E8F0;--shadow-lg:0 18px 45px rgba(15,23,42,0.14);
+  --shadow-soft:0 10px 28px rgba(37,99,235,0.16);--radius-xl:24px;
+  --gradient-primary:linear-gradient(135deg,#2563EB,#14B8A6);
+  --font-heading:'Poppins', sans-serif;--font-body:'Inter', sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{min-height:100%;}
+body{
+  min-height:100vh;
+  background:radial-gradient(circle at 12% 10%, rgba(37,99,235,0.16), transparent 28%),
+  radial-gradient(circle at 88% 18%, rgba(20,184,166,0.16), transparent 30%),
+  linear-gradient(180deg,#F8FAFC,#EEF6FF);
+  font-family:var(--font-body);display:flex;justify-content:center;align-items:flex-start;
+  padding:20px;color:var(--text-primary);animation:pageFade 0.75s ease both;
+}
+.container{
+  width:100%;max-width:430px;background:rgba(255,255,255,0.94);
+  border:1px solid rgba(226,232,240,0.9);border-radius:var(--radius-xl);
+  box-shadow:var(--shadow-lg);overflow:hidden;backdrop-filter:blur(12px);
+  animation:containerEnter 0.85s cubic-bezier(0.22,1,0.36,1) both;
+}
+.referral-card{
+  position:relative;padding:17px;border-bottom:1px solid var(--border-light);overflow:hidden;
+  background:radial-gradient(circle at 8% 0%, rgba(37,99,235,0.18), transparent 38%),
+  radial-gradient(circle at 100% 100%, rgba(20,184,166,0.16), transparent 40%),#FFFFFF;
+}
+.referral-card::before{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(115deg,transparent 0%,transparent 35%,rgba(255,255,255,0.72) 48%,transparent 62%,transparent 100%);
+  transform:translateX(-130%);animation:profileShine 4.2s ease-in-out infinite;pointer-events:none;
+}
+.referral-card::after{
+  content:"";position:absolute;left:17px;right:17px;bottom:0;height:1px;
+  background:linear-gradient(90deg,transparent,#2563EB,#14B8A6,transparent);opacity:0.35;
+}
+.profile{position:relative;z-index:1;display:flex;gap:13px;align-items:center;animation:profileSlide 0.75s ease both;}
+.profile img{
+  width:58px;height:58px;flex:0 0 58px;border-radius:50%;object-fit:cover;border:3px solid #FFFFFF;
+  box-shadow:0 0 0 2px rgba(37,99,235,0.14),0 12px 22px rgba(37,99,235,0.20);
+  animation:photoPop 0.85s cubic-bezier(0.22,1,0.36,1) both;
+}
+.profile-info{min-width:0;}
+.profile-info h3{
+  font-family:var(--font-heading);font-size:16px;line-height:1.2;color:var(--text-primary);
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;animation:textUp 0.65s ease both;animation-delay:0.12s;
+}
+.profile-info p{
+  display:flex;
+  align-items:center;
+  gap:7px;
+  width:fit-content;
+  max-width:100%;
+  margin-top:6px;
+  padding:5px 10px;
+  border-radius:999px;
+  background:rgba(37,99,235,0.09);
+  color:var(--color-primary);
+  font-size:12px;
+  font-weight:700;
+  line-height:1;
+  box-shadow:inset 0 0 0 1px rgba(37,99,235,0.08);
+  animation:badgePop 0.7s ease both;
+  animation-delay:0.22s;
+}
+.profile-info p > span:first-child{
+  min-width:0;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+.profile-info .ref-email{
+  width:100%;
+  padding:0;
+  border-radius:0;
+  background:transparent;
+  color:var(--text-secondary);
+  font-size:12px;
+  box-shadow:none;
+}
+.verify-badge{
+  display:inline-flex;
+  align-items:center;
+  gap:5px;
+  padding:4px 8px;
+  border-radius:999px;
+  font-size:10px;
+  font-weight:900;
+  line-height:1;
+  white-space:nowrap;
+  flex:0 0 auto;
+}
+.verify-badge.verified{
+  background:rgba(37,99,235,0.12);
+  color:#2563EB;
+}
+.verify-badge.unverified{
+  background:rgba(239,68,68,0.10);
+  color:#EF4444;
+}
+.blue-tick{
+  width:14px;
+  height:14px;
+  border-radius:50%;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  background:#2563EB;
+  color:#fff;
+  font-size:10px;
+  font-weight:900;
+}
+.form-section{padding:20px;background:linear-gradient(180deg,rgba(255,255,255,0.96),rgba(248,250,252,0.92));}
+.input-group{margin-bottom:15px;animation:fieldEnter 0.55s ease both;}
+.input-group:nth-child(1){animation-delay:0.08s}.input-group:nth-child(2){animation-delay:0.13s}
+.input-group:nth-child(3){animation-delay:0.18s}.input-group:nth-child(4){animation-delay:0.23s}
+.input-group:nth-child(5){animation-delay:0.28s}.input-group:nth-child(6){animation-delay:0.33s}
+.input-group:nth-child(7){animation-delay:0.38s}.input-group:nth-child(8){animation-delay:0.43s}
+.input-group:nth-child(9){animation-delay:0.48s}
+label{display:block;margin-bottom:7px;color:var(--text-secondary);font-size:13px;font-weight:700;}
+input{
+  width:100%;height:48px;padding:0 14px;border:1px solid var(--border-light);border-radius:13px;outline:none;
+  background:#FFFFFF;color:var(--text-primary);font-size:14px;font-family:var(--font-body);
+  transition:border-color 0.22s ease,box-shadow 0.22s ease,transform 0.22s ease,background 0.22s ease;
+}
+input::placeholder{color:#94A3B8;}input:hover{border-color:#CBD5E1;background:#FFFFFF;}
+input:focus{border-color:var(--color-primary);box-shadow:0 0 0 4px rgba(37,99,235,0.10),0 8px 18px rgba(37,99,235,0.08);transform:translateY(-1px);}
+.uppercase-input{text-transform:uppercase;}
+.mobile-wrapper{
+  display:flex;min-height:48px;border:1px solid var(--border-light);border-radius:13px;overflow:hidden;background:#FFFFFF;
+  transition:border-color 0.22s ease,box-shadow 0.22s ease,transform 0.22s ease;
+}
+.mobile-wrapper:focus-within{border-color:var(--color-primary);box-shadow:0 0 0 4px rgba(37,99,235,0.10),0 8px 18px rgba(37,99,235,0.08);transform:translateY(-1px);}
+.country-code{
+  display:flex;align-items:center;justify-content:center;min-width:58px;padding:0 13px;
+  background:linear-gradient(180deg,#F8FAFC,#EEF2FF);color:var(--text-primary);font-size:14px;font-weight:800;border-right:1px solid var(--border-light);
+}
+.mobile-wrapper input{height:46px;border:none;border-radius:0;box-shadow:none;transform:none;}
+.mobile-wrapper input:focus{box-shadow:none;transform:none;}
+.submit-btn{
+  position:relative;width:100%;min-height:52px;margin-top:2px;padding:15px;border:none;border-radius:14px;overflow:hidden;
+  background:var(--gradient-primary);color:#FFFFFF;font-family:var(--font-body);font-size:16px;font-weight:800;cursor:pointer;
+  box-shadow:var(--shadow-soft);transition:transform 0.22s ease,box-shadow 0.22s ease,filter 0.22s ease;
+  animation:buttonEnter 0.6s ease both;animation-delay:0.45s;
+}
+.submit-btn::before{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(115deg,transparent 0%,transparent 34%,rgba(255,255,255,0.38) 48%,transparent 64%,transparent 100%);
+  transform:translateX(-120%);transition:transform 0.7s ease;
+}
+.submit-btn:hover{transform:translateY(-2px);box-shadow:0 16px 30px rgba(37,99,235,0.28);filter:saturate(1.05);}
+.submit-btn:hover::before{transform:translateX(120%);}
+.submit-btn:active{transform:scale(0.985);}
+@media (max-width:480px){
+  body{padding:14px}.container{border-radius:22px}.form-section{padding:18px}
+  .profile img{width:54px;height:54px;flex-basis:54px}input,.mobile-wrapper{min-height:47px}
+  .profile-info p{align-items:flex-start;flex-wrap:wrap;border-radius:14px;line-height:1.25}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:0.01ms !important;animation-iteration-count:1 !important;scroll-behavior:auto !important;transition-duration:0.01ms !important;}
+}
+@keyframes pageFade{from{opacity:0}to{opacity:1}}
+@keyframes containerEnter{from{opacity:0;transform:translateY(22px) scale(0.98)}to{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes profileShine{0%{transform:translateX(-130%)}42%,100%{transform:translateX(130%)}}
+@keyframes profileSlide{from{opacity:0;transform:translateX(-16px)}to{opacity:1;transform:translateX(0)}}
+@keyframes photoPop{0%{opacity:0;transform:scale(0.74) rotate(-5deg)}70%{transform:scale(1.07) rotate(1deg)}100%{opacity:1;transform:scale(1) rotate(0)}}
+@keyframes textUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@keyframes badgePop{from{opacity:0;transform:translateY(8px) scale(0.94)}to{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes fieldEnter{from{opacity:0;transform:translateY(11px)}to{opacity:1;transform:translateY(0)}}
+@keyframes buttonEnter{from{opacity:0;transform:translateY(12px) scale(0.98)}to{opacity:1;transform:translateY(0) scale(1)}}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="referral-card">
+  <div class="profile">
+    <img id="refPhoto" src="assets/favicon.jpg" alt="Referrer" referrerpolicy="no-referrer">
+    <div class="profile-info">
+      <h3 id="refName">7unici</h3>
+      <p id="refEmail" class="ref-email">Email not available</p>
+      <p id="refStatus">Fetching user...</p>
+    </div>
+  </div>
+</div>
+
+<div class="form-section">
+
+<form id="leadForm">
+
+<div class="input-group">
+<label>PAN</label>
+<input id="pan" class="uppercase-input" type="text" maxlength="12" placeholder="ABCDE 1234 F" pattern="[A-Z]{5} [0-9]{4} [A-Z]{1}" title="PAN format: ABCDE 1234 F" autocomplete="off" required>
+</div>
+
+<div class="input-group">
+<label>Aadhaar</label>
+<input id="aadhaar" type="text" inputmode="numeric" maxlength="14" placeholder="1234 5678 9012" pattern="[0-9]{4} [0-9]{4} [0-9]{4}" title="Aadhaar format: 1234 5678 9012" autocomplete="off" required>
+</div>
+
+<div class="input-group">
+  <label>Full Name</label>
+  <input id="name" type="text" placeholder="Enter your full name" required>
+</div>
+
+<div class="input-group">
+  <label>Father Name</label>
+  <input id="fatherName" type="text" placeholder="Enter father name" required>
+</div>
+
+<div class="input-group">
+  <label>Mother Name</label>
+  <input id="motherName" type="text" placeholder="Enter mother name" required>
+</div>
+
+<div class="input-group">
+  <label>Email Address</label>
+  <input id="email" type="email" placeholder="Enter your email address" required>
+</div>
+
+<div class="input-group">
+<label>Mobile</label>
+<div class="mobile-wrapper">
+  <div class="country-code">+91</div>
+  <input id="mobile" type="tel" placeholder="enter contact no." inputmode="numeric" maxlength="10" pattern="[0-9]{10}" required>
+</div>
+</div>
+
+<div class="input-group">
+<label>Aadhaar Mobile</label>
+<div class="mobile-wrapper">
+  <div class="country-code">+91</div>
+  <input id="aadhaarMobile" type="tel" placeholder="enter aadhar linked mobile no." inputmode="numeric" maxlength="10" pattern="[0-9]{10}" required>
+</div>
+</div>
+
+<div class="input-group">
+<label>DOB</label>
+<input id="dob" type="date" required>
+</div>
+
+<button class="submit-btn">Submit</button>
+
+</form>
+
+</div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+
+import {
+  getDatabase,
+  ref,
+  push,
+  get,
+  onValue,
+  update,
+  set
+} from "https://www.gstatic.com/firebasejs/10.12.5/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDIS8wAIqjSfLaUurqiF2kJe6mcEQLuz8w",
+  authDomain: "sameerswaraj-15d99.firebaseapp.com",
+  databaseURL: "https://sameerswaraj-15d99-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "sameerswaraj-15d99"
+};
+
+const productFirebaseConfig = {
+  apiKey: "AIzaSyCn1bDwN8aLm6RS0BDzg_XpGOgV1RTwUqk",
+  authDomain: "sameerswaraj-d5c6c.firebaseapp.com",
+  databaseURL: "https://sameerswaraj-d5c6c-default-rtdb.firebaseio.com",
+  projectId: "sameerswaraj-d5c6c"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+const productApp = initializeApp(productFirebaseConfig, "productData");
+const productDb = getDatabase(productApp);
+
+const params = new URLSearchParams(window.location.search);
+const refId = params.get("r") || params.get("ref") || "";
+const appName = params.get("p") || "unknown";
+const linkProductAmount = Number(params.get("a") || params.get("amount") || params.get("rupee") || params.get("price") || 0);
+
+const appRedirectUrls = {
+  angelone: "https://www.angelone.in/",
+  aliceblue: "https://aliceblueonline.com/",
+  AliceBlue: "https://aliceblueonline.com/",
+  "appreciate-wealth": "https://appreciatewealth.com/",
+  "Appreciate Wealth": "https://appreciatewealth.com/"
+};
+
+const appDisplayNames = {
+  angelone: "Angel One",
+  aliceblue: "AliceBlue",
+  AliceBlue: "AliceBlue",
+  "appreciate-wealth": "Appreciate Wealth",
+  "Appreciate Wealth": "Appreciate Wealth"
+};
+
+const redirectUrl = appRedirectUrls[appName] || "https://www.7unici.com/";
+const displayAppName = appDisplayNames[appName] || humanizeProductName(appName);
+let lastLookupKey = "";
+let currentProductAmount = Number.isFinite(linkProductAmount) ? linkProductAmount : 0;
+
+function esc(value) {
+  return String(value || "")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
+
+function isVerified(data = {}) {
+  const value =
+    data.isVerified ??
+    data.verified ??
+    data.Verified ??
+    data.verify ??
+    data.statusVerified;
+
+  return value === true ||
+    value === "true" ||
+    value === "TRUE" ||
+    value === "yes" ||
+    value === "YES" ||
+    value === 1 ||
+    value === "1";
+}
+
+function getVerifyBadge(data = {}) {
+  if (isVerified(data)) {
+    return `
+      <span class="verify-badge verified">
+        Verified <span class="blue-tick">&#10003;</span>
+      </span>
+    `;
+  }
+
+  return `<span class="verify-badge unverified">Unverified</span>`;
+}
+
+function setAppStatus(userData = {}) {
+  const statusEl = document.getElementById("refStatus");
+  if (!statusEl) return;
+
+  statusEl.innerHTML = `
+    <span>${esc(displayAppName)}</span>
+    ${getVerifyBadge(userData)}
+  `;
+}
+
+function maskEmail(email) {
+  const value = String(email || "").trim();
+  const parts = value.split("@");
+
+  if (parts.length !== 2 || !parts[0] || !parts[1]) {
+    return "Email not available";
+  }
+
+  const name = parts[0];
+  const maskedName = name.length <= 2
+    ? name[0] + "*"
+    : name[0] + "*".repeat(Math.max(2, name.length - 2)) + name[name.length - 1];
+
+  return `${maskedName}@${parts[1]}`;
+}
+
+function addCacheBust(url) {
+  const value = String(url || "").trim();
+  if (!value) return "";
+  return value + (value.includes("?") ? "&" : "?") + "t=" + Date.now();
+}
+
+function onlyNumbers(id, maxLen = 10) {
+  const el = document.getElementById(id);
+  if (!el) return;
+
+  const clean = () => {
+    el.value = el.value.replace(/\D/g, "").slice(0, maxLen);
+  };
+
+  el.addEventListener("input", clean);
+  el.addEventListener("paste", () => setTimeout(clean, 0));
+  el.addEventListener("blur", clean);
+}
+
+onlyNumbers("mobile", 10);
+onlyNumbers("aadhaarMobile", 10);
+
+function firstValue(data = {}, keys = []) {
+  for (const key of keys) {
+    const value = data[key];
+    if (value !== undefined && value !== null && String(value).trim()) {
+      return String(value).trim();
+    }
+  }
+  return "";
+}
+
+function cleanDigits(value, maxLen) {
+  return String(value || "").replace(/\D/g, "").slice(0, maxLen);
+}
+
+function humanizeProductName(value) {
+  const cleanValue = String(value || "product")
+    .replace(/[-_]+/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+
+  return cleanValue
+    ? cleanValue.replace(/\b\w/g, (char) => char.toUpperCase())
+    : "Referral Partner";
+}
+
+function formatPan(value) {
+  const chars = String(value || "").toUpperCase().replace(/[^A-Z0-9]/g, "").split("");
+  let part1 = "";
+  let part2 = "";
+  let part3 = "";
+
+  chars.forEach((char) => {
+    if (part1.length < 5) {
+      if (/^[A-Z]$/.test(char)) part1 += char;
+      return;
+    }
+
+    if (part2.length < 4) {
+      if (/^[0-9]$/.test(char)) part2 += char;
+      return;
+    }
+
+    if (!part3 && /^[A-Z]$/.test(char)) {
+      part3 = char;
+    }
+  });
+
+  return [part1, part2, part3].filter(Boolean).join(" ");
+}
+
+function formatAadhaar(value) {
+  return cleanDigits(value, 12).replace(/(\d{4})/g, "$1 ").trim();
+}
+
+function setFieldValue(id, value) {
+  const el = document.getElementById(id);
+  if (!el || value === undefined || value === null || String(value).trim() === "") return;
+  el.value = value;
+}
+
+function getLeadAutofillData(data = {}) {
+  return {
+    name: firstValue(data, ["fullName", "Name", "name"]),
+    fatherName: firstValue(data, ["fName", "fatherName", "Father name"]),
+    motherName: firstValue(data, ["mName", "motherName", "Mother name"]),
+    email: firstValue(data, ["emailId", "email", "Email"]),
+    mobile: firstValue(data, ["Contact no", "contactNo", "contact", "mobile", "phone", "contactNumber"]),
+    aadhaarMobile: firstValue(data, ["aadharLinkedMobNo", "aadharLinkedNo", "aadhaarLinkedNo", "Aadhar linked mob no", "Aadhar Linked Mob. no.", "aadhaarLinkedMobile", "aadhaarLinkedMobileNo", "aadhaarMobile", "aadharLinkedMobile", "aadharLinkedMobileNo"]),
+    pan: firstValue(data, ["panCardNo", "Pan card no", "PAN card no", "panNo", "panCardNumber", "panCardNo", "pan"]),
+    aadhaar: firstValue(data, ["aadharCardNo", "aadharNo", "aadhaarNo", "Aadhar card no", "Aadhaar card no", "aadhaarCardNumber", "aadhaarCardNo", "aadhaar", "aadharCardNumber", "aadharCardNo"]),
+    dob: firstValue(data, ["dob", "dateOfBirth", "birthDate"])
+  };
+}
+
+function applyLeadAutofill(...sources) {
+  const merged = sources.reduce((result, source) => {
+    const data = getLeadAutofillData(source || {});
+    Object.entries(data).forEach(([key, value]) => {
+      if (value) result[key] = value;
+    });
+    return result;
+  }, {});
+
+  setFieldValue("name", merged.name);
+  setFieldValue("fatherName", merged.fatherName);
+  setFieldValue("motherName", merged.motherName);
+  setFieldValue("email", merged.email);
+  setFieldValue("mobile", cleanDigits(merged.mobile, 10));
+  setFieldValue("aadhaarMobile", cleanDigits(merged.aadhaarMobile, 10));
+  setFieldValue("pan", formatPan(merged.pan));
+  setFieldValue("aadhaar", formatAadhaar(merged.aadhaar));
+  setFieldValue("dob", merged.dob);
+}
+
+function normalizeProductName(value) {
+  return String(value || "").trim().toLowerCase().replace(/\s+/g, "-");
+}
+
+function cleanProductKey(value) {
+  return normalizeProductName(value || "product")
+    .replace(/[.#$/[\]]/g, "-")
+    .replace(/[^a-z0-9_-]/g, "-") || "product";
+}
+
+function cleanLeadEmailKey(value) {
+  return String(value || "lead")
+    .trim()
+    .toLowerCase()
+    .replace(/\./g, ",")
+    .replace(/[#$\/[\]]/g, "-") || "lead";
+}
+
+function getRootLeadIdentityData(data = {}) {
+  return {
+    panCardNo: data.panNo || "",
+    aadharCardNo: data.aadharNo || "",
+    fullName: data.name || "",
+    fName: data.fName || "",
+    mName: data.mName || "",
+    emailId: data.emailId || "",
+    aadharLinkedMobNo: data.aadharLinkedNo || "",
+    contactNo: data.contactNo || "",
+    dob: data.dob || ""
+  };
+}
+
+async function saveRootLeadIdentity(emailKey, identityData) {
+  if (!emailKey) return;
+  await set(ref(db, `leads/${emailKey}`), identityData);
+}
+
+function readProductAmount(product = {}) {
+  const amount = Number(String(product.appAmount || product.amount || product.rupee || product.price || product.productAmount || 0).replace(/[^\d.]/g, ""));
+  return Number.isFinite(amount) ? amount : 0;
+}
+
+function productLookupKeys(value) {
+  const raw = String(value || "").trim();
+  const slug = normalizeProductName(raw);
+  const compact = slug.replaceAll("-", "");
+  return [...new Set([raw, slug, compact].filter(Boolean))];
+}
+
+function findProductInCatalog(data, wantedKeys) {
+  const wanted = wantedKeys.map((key) => normalizeProductName(key).replaceAll("-", ""));
+  const source = data?.products && typeof data.products === "object"
+    ? data.products
+    : data?.product && typeof data.product === "object"
+      ? data.product
+      : data?.categories && typeof data.categories === "object"
+        ? data.categories
+        : data;
+
+  const findInNode = (node, nodeKey = "") => {
+    if (!node || typeof node !== "object") return null;
+    const amount = readProductAmount(node);
+    const candidates = productLookupKeys(node.name || node.productName || node.appName || node.product || nodeKey)
+      .map((key) => normalizeProductName(key).replaceAll("-", ""));
+    if (amount > 0 && candidates.some((candidate) => wanted.includes(candidate))) return node;
+
+    for (const [childKey, childValue] of Object.entries(node)) {
+      if (!childValue || typeof childValue !== "object") continue;
+      const found = findInNode(childValue, childKey);
+      if (found) return found;
+    }
+
+    return null;
+  };
+
+  const recursiveMatch = findInNode(source);
+  if (recursiveMatch) return recursiveMatch;
+
+  for (const categoryValue of Object.values(source || {})) {
+    if (!categoryValue || typeof categoryValue !== "object") continue;
+    const directAmount = readProductAmount(categoryValue);
+    if (directAmount > 0) {
+      const directCandidates = productLookupKeys(categoryValue.name || categoryValue.productName || categoryValue.appName || "")
+        .map((key) => normalizeProductName(key).replaceAll("-", ""));
+      if (directCandidates.some((candidate) => wanted.includes(candidate))) return categoryValue;
+    }
+
+    for (const [productKey, productValue] of Object.entries(categoryValue)) {
+      if (!productValue || typeof productValue !== "object") continue;
+      const candidates = productLookupKeys(productValue.name || productKey)
+        .map((key) => normalizeProductName(key).replaceAll("-", ""));
+      if (candidates.some((candidate) => wanted.includes(candidate))) return productValue;
+    }
+  }
+
+  return null;
+}
+
+async function fetchCurrentProductAmount() {
+  try {
+    const productKeys = [...new Set([
+      ...productLookupKeys(appName),
+      ...productLookupKeys(displayAppName)
+    ])];
+    const fallbackAmount = Number(currentProductAmount || 0);
+
+    for (const productKey of productKeys) {
+      const mirrorSnapshot = await get(ref(db, `products/${productKey}`));
+      if (mirrorSnapshot.exists()) {
+        currentProductAmount = readProductAmount(mirrorSnapshot.val()) || currentProductAmount;
+        break;
+      }
+
+      const productSnapshot = await get(ref(productDb, `products/${productKey}`));
+      if (productSnapshot.exists()) {
+        currentProductAmount = readProductAmount(productSnapshot.val()) || currentProductAmount;
+        break;
+      }
+    }
+
+    if (!currentProductAmount) {
+      const catalogSnapshot = await get(ref(productDb));
+      const product = findProductInCatalog(catalogSnapshot.exists() ? catalogSnapshot.val() : {}, productKeys);
+      currentProductAmount = readProductAmount(product) || currentProductAmount;
+    }
+
+    currentProductAmount = Number(currentProductAmount || fallbackAmount || 0);
+  } catch (err) {
+    console.warn("Product amount fetch failed:", err);
+  }
+
+  return currentProductAmount;
+}
+
+function getLeadProducts(lead = {}) {
+  const productData = lead.product && typeof lead.product === "object"
+    ? lead.product
+    : lead.products;
+  const products = productData && typeof productData === "object"
+    ? Object.entries(productData).map(([productId, product]) => ({
+      ...(product || {}),
+      appName: product?.appName || productId,
+      productName: product?.productName || humanizeProductName(productId),
+      product: product?.product || productId,
+      productId
+    }))
+    : [];
+
+  if (!products.length && (lead.appName || lead.productName || lead.product)) {
+    products.push({
+      appName: lead.appName || lead.productName || lead.product,
+      productName: lead.productName || lead.appName || lead.product,
+      status: lead.status || "process",
+      amount: Number(lead.amount || lead.appAmount || lead.earn || lead.price || lead.productAmount || 0),
+      submittedAt: lead.submittedAt,
+      updatedAt: lead.updatedAt
+    });
+  }
+
+  return products.filter((product) => product && (product.appName || product.productName || product.product));
+}
+
+function leadMatchesProduct(lead = {}) {
+  const currentAppName = normalizeProductName(appName);
+  const currentDisplayName = normalizeProductName(displayAppName);
+  const products = getLeadProducts(lead);
+
+  if (!products.length) return true;
+
+  return products.some((product) => {
+    const leadAppName = normalizeProductName(product.appName || product.productName || product.product);
+    return !leadAppName ||
+      leadAppName === currentAppName ||
+      leadAppName === currentDisplayName ||
+      leadAppName.replaceAll("-", "") === currentAppName.replaceAll("-", "");
+  });
+}
+
+function leadMatchesPanAadhaar(lead = {}, panValue = "", aadhaarValue = "") {
+  const leadData = getLeadAutofillData(lead);
+  const leadPan = String(leadData.pan || "").replace(/\s/g, "").toUpperCase();
+  const leadAadhaar = cleanDigits(leadData.aadhaar, 12);
+  const cleanPan = String(panValue || "").replace(/\s/g, "").toUpperCase();
+  const cleanAadhaar = cleanDigits(aadhaarValue, 12);
+
+  return (!!cleanPan && cleanPan.length === 10 && leadPan === cleanPan) ||
+    (!!cleanAadhaar && cleanAadhaar.length === 12 && leadAadhaar === cleanAadhaar);
+}
+
+async function findLeadByPanAadhaar(panValue = "", aadhaarValue = "") {
+  const leadGroups = [];
+
+  try {
+    const rootLeadsSnapshot = await get(ref(db, "leads"));
+    if (rootLeadsSnapshot.exists()) {
+      leadGroups.push(Object.values(rootLeadsSnapshot.val() || {}));
+    }
+  } catch (err) {
+    console.warn("Root leads lookup failed:", err);
+  }
+
+  if (refId) {
+    try {
+      const currentRefSnapshot = await get(ref(db, `users/${refId}/productEarnings/leads`));
+      if (currentRefSnapshot.exists()) {
+        leadGroups.push(Object.values(currentRefSnapshot.val() || {}));
+      }
+    } catch (err) {
+      console.warn("Current referrer lead lookup failed:", err);
+    }
+  }
+
+  for (const collection of ["users", "users1"]) {
+    try {
+      const usersSnapshot = await get(ref(db, collection));
+      if (!usersSnapshot.exists()) continue;
+
+      Object.values(usersSnapshot.val() || {}).forEach((userData) => {
+        const leadsData = userData?.productEarnings?.leads || userData?.productLeads;
+        if (leadsData) {
+          leadGroups.push(Object.values(leadsData || {}));
+        }
+      });
+    } catch (err) {
+      console.warn(`${collection} lead lookup failed:`, err);
+    }
+  }
+
+  const leads = leadGroups
+    .flat()
+    .filter((lead) => leadMatchesPanAadhaar(lead, panValue, aadhaarValue))
+    .sort((a, b) => {
+      const productScore = Number(leadMatchesProduct(b)) - Number(leadMatchesProduct(a));
+      if (productScore !== 0) return productScore;
+      return Number(b.submittedAt || b.updatedAt || 0) - Number(a.submittedAt || a.updatedAt || 0);
+    });
+
+  return leads[0] || null;
+}
+
+async function findDuplicateProductLead(panValue = "", aadhaarValue = "", productName = "") {
+  for (const collection of ["users", "users1"]) {
+    try {
+      const usersSnapshot = await get(ref(db, collection));
+      if (!usersSnapshot.exists()) continue;
+
+      const usersData = usersSnapshot.val() || {};
+      for (const [ownerUid, userData] of Object.entries(usersData)) {
+        const leadsData = userData?.productEarnings?.leads || userData?.productLeads || {};
+        const leads = Object.entries(leadsData || {});
+
+        for (const [leadId, lead] of leads) {
+          if (
+            leadMatchesPanAadhaar(lead, panValue, aadhaarValue) &&
+            hasSameProduct(lead, productName || appName)
+          ) {
+            return {
+              ownerUid,
+              leadId,
+              lead
+            };
+          }
+        }
+      }
+    } catch (err) {
+      console.warn(`${collection} duplicate lead lookup failed:`, err);
+    }
+  }
+
+  return null;
+}
+
+async function findDuplicateProductLeadOutsideCurrentLead(panValue = "", aadhaarValue = "", productName = "", currentLeadId = "") {
+  const duplicate = await findDuplicateProductLead(panValue, aadhaarValue, productName);
+
+  if (
+    duplicate &&
+    duplicate.ownerUid === refId &&
+    currentLeadId &&
+    duplicate.leadId === currentLeadId
+  ) {
+    return null;
+  }
+
+  return duplicate;
+}
+
+async function autofillFromPanAadhaar() {
+  const panValue = document.getElementById("pan")?.value || "";
+  const aadhaarValue = document.getElementById("aadhaar")?.value || "";
+  const cleanPan = String(panValue).replace(/\s/g, "").toUpperCase();
+  const cleanAadhaar = cleanDigits(aadhaarValue, 12);
+
+  if (cleanPan.length !== 10 && cleanAadhaar.length !== 12) return;
+
+  const lookupKey = `${cleanPan}|${cleanAadhaar}`;
+  if (lookupKey === lastLookupKey) return;
+
+  try {
+    const oldLeadData = await findLeadByPanAadhaar(cleanPan, cleanAadhaar);
+    if (oldLeadData) {
+      applyLeadAutofill(oldLeadData);
+      lastLookupKey = lookupKey;
+    }
+  } catch (err) {
+    console.warn("PAN/Aadhaar lead lookup failed:", err);
+  }
+}
+
+async function loadReferrer() {
+  const nameEl = document.getElementById("refName");
+  const emailEl = document.getElementById("refEmail");
+  const photoEl = document.getElementById("refPhoto");
+
+  const applyFallbackReferrer = (usePhotoFallback = false) => {
+    nameEl.textContent = "7unici";
+    emailEl.textContent = "Email not available";
+    if (usePhotoFallback) {
+      photoEl.src = "assets/favicon.jpg";
+    } else {
+      photoEl.src = "assets/favicon.jpg";
+    }
+    setAppStatus({ isVerified: false });
+  };
+
+  const applyReferrer = (user) => {
+    const authData = user.authData || {};
+    const name = firstValue(authData, ["name", "displayName"]) ||
+      firstValue(user, ["Name", "name", "displayName"]) ||
+      "7unici";
+    const email = firstValue(authData, ["email"]) ||
+      firstValue(user, ["Email", "email"]);
+    const photo = firstValue(authData, ["photo", "photoURL"]) ||
+      firstValue(user, ["Photo", "photo", "photoURL"]);
+
+    nameEl.textContent = name;
+    emailEl.textContent = maskEmail(email);
+    photoEl.referrerPolicy = "no-referrer";
+    photoEl.onerror = () => {
+      photoEl.onerror = null;
+      photoEl.src = "assets/favicon.jpg";
+    };
+    if (photo) {
+      photoEl.src = addCacheBust(photo);
+    } else {
+      photoEl.src = "assets/favicon.jpg";
+    }
+    setAppStatus(user);
+  };
+
+  if (!refId) {
+    applyFallbackReferrer(true);
+    return;
+  }
+
+  try {
+    const usersSnapshot = await get(ref(db, `users/${refId}`));
+
+    if (usersSnapshot.exists()) {
+      onValue(ref(db, `users/${refId}`), (snapshot) => {
+        if (!snapshot.exists()) {
+          applyFallbackReferrer();
+          return;
+        }
+        applyReferrer(snapshot.val() || {});
+      });
+      return;
+    }
+
+    const users1Snapshot = await get(ref(db, `users1/${refId}`));
+
+    if (users1Snapshot.exists()) {
+      onValue(ref(db, `users1/${refId}`), (snapshot) => {
+        if (!snapshot.exists()) {
+          applyFallbackReferrer();
+          return;
+        }
+        applyReferrer(snapshot.val() || {});
+      });
+      return;
+    }
+
+  } catch (err) {
+    console.error("Referrer load failed:", err);
+  }
+
+  applyFallbackReferrer();
+}
+
+loadReferrer();
+
+const pan = document.getElementById("pan");
+
+if (pan) {
+  pan.addEventListener("input", (e) => {
+    e.target.value = formatPan(e.target.value);
+    setTimeout(autofillFromPanAadhaar, 0);
+  });
+  pan.addEventListener("blur", autofillFromPanAadhaar);
+}
+
+const aadhaar = document.getElementById("aadhaar");
+
+if (aadhaar) {
+  aadhaar.addEventListener("input", () => {
+    aadhaar.value = formatAadhaar(aadhaar.value);
+    setTimeout(autofillFromPanAadhaar, 0);
+  });
+  aadhaar.addEventListener("blur", autofillFromPanAadhaar);
+}
+
+function sameValue(a, b) {
+  return String(a || "").trim() === String(b || "").trim();
+}
+
+function isSameLead(oldLead, newLead) {
+  const oldData = getLeadAutofillData(oldLead);
+  const newData = getLeadAutofillData(newLead);
+
+  return (
+    sameValue(oldData.name, newData.name) &&
+    sameValue(oldData.fatherName, newData.fatherName) &&
+    sameValue(oldData.motherName, newData.motherName) &&
+    sameValue(oldData.email, newData.email) &&
+    sameValue(oldData.mobile, newData.mobile) &&
+    sameValue(oldData.aadhaarMobile, newData.aadhaarMobile) &&
+    sameValue(oldData.aadhaar, newData.aadhaar) &&
+    sameValue(oldData.pan, newData.pan) &&
+    sameValue(oldData.dob, newData.dob)
+  );
+}
+
+function hasSameProduct(lead = {}, productName = "") {
+  const target = normalizeProductName(productName || appName);
+  return getLeadProducts(lead).some((product) => {
+    const candidate = normalizeProductName(product.appName || product.productName || product.product);
+    return candidate === target || candidate.replaceAll("-", "") === target.replaceAll("-", "");
+  });
+}
+
+function cleanProductSubmitData(product = {}) {
+  const status = String(product.status || "process").toLowerCase();
+  const cleanStatus = status === "success" || status === "reject" ? status : "process";
+  const amount = Number(product.amount || product.appAmount || product.price || product.productAmount || 0);
+  const earn = cleanStatus === "success" ? amount : 0;
+  return {
+    amount,
+    earn,
+    status: cleanStatus
+  };
+}
+
+function getLegacyLeadCleanup() {
+  return {
+    Name: null,
+    "Father name": null,
+    fatherName: null,
+    "Mother name": null,
+    motherName: null,
+    Email: null,
+    email: null,
+    "Contact no": null,
+    contact: null,
+    "Aadhar linked mob no": null,
+    aadhaarLinkedMobile: null,
+    aadhaarLinkedMobileNo: null,
+    aadhaarMobile: null,
+    aadharLinkedMobile: null,
+    aadharLinkedMobileNo: null,
+    "Aadhar card no": null,
+    "Aadhaar card no": null,
+    aadhaarNo: null,
+    aadhaarCardNumber: null,
+    aadhaarCardNo: null,
+    aadhaar: null,
+    aadharCardNumber: null,
+    aadharCardNo: null,
+    "Pan card no": null,
+    "PAN card no": null,
+    panCardNumber: null,
+    panCardNo: null,
+    pan: null,
+    products: null,
+    appName: null,
+    productName: null,
+    status: null,
+    earn: null,
+    amount: null,
+    appCount: null,
+    submittedAt: null,
+    updatedAt: null,
+    updatedDateTime: null,
+    leadUid: null,
+    leadUID: null,
+    ownerUid: null,
+    referrerUid: null,
+    isVerified: null,
+    verified: null,
+    note: null
+  };
+}
+
+function getProductMigrationData(lead = {}) {
+  return getLeadProducts(lead).reduce((updates, product) => {
+    const productKey = cleanProductKey(product.productId || product.appName || product.productName || product.product);
+    updates[`product/${productKey}`] = cleanProductSubmitData(product);
+    return updates;
+  }, {});
+}
+
+function getMigratedProductObject(lead = {}) {
+  return getLeadProducts(lead).reduce((products, product) => {
+    const productKey = cleanProductKey(product.productId || product.appName || product.productName || product.product);
+    products[productKey] = cleanProductSubmitData(product);
+    return products;
+  }, {});
+}
+
+function getProductSubmitData() {
+  const amount = Number(currentProductAmount || 0);
+  const now = Date.now();
+  return {
+    amount,
+    earn: 0,
+    status: "process",
+    updatedDateTime: new Date(now).toLocaleString("en-IN", {
+      timeZone: "Asia/Kolkata",
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+      hour12: true
+    })
+  };
+}
+
+function getProductOnlyLeadData(product = {}) {
+  return {
+    ...getLegacyLeadCleanup(),
+    products: null,
+    product
+  };
+}
+
+const form = document.getElementById("leadForm");
+
+if (form) {
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const name = document.getElementById("name").value.trim();
+    const fatherName = document.getElementById("fatherName").value.trim();
+    const motherName = document.getElementById("motherName").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const mobile = document.getElementById("mobile").value.replace(/\D/g, "");
+    const aadhaarMobile = document.getElementById("aadhaarMobile").value.replace(/\D/g, "");
+    const panValue = document.getElementById("pan").value.replace(/\s/g, "").toUpperCase();
+    const aadhaarValue = document.getElementById("aadhaar").value.replace(/\s/g, "");
+    const dob = document.getElementById("dob").value;
+
+    const birthDate = new Date(dob);
+    const today = new Date();
+
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const monthDiff = today.getMonth() - birthDate.getMonth();
+
+    if (
+      monthDiff < 0 ||
+      (monthDiff === 0 && today.getDate() < birthDate.getDate())
+    ) {
+      age--;
+    }
+
+    const panPattern = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
+
+    if (!refId) {
+      alert("Referral link invalid hai");
+      return;
+    }
+
+    if (mobile.length !== 10) {
+      alert("Enter correct mobile number");
+      return;
+    }
+
+    if (aadhaarMobile.length !== 10) {
+      alert("Enter correct Aadhaar linked mobile number");
+      return;
+    }
+
+    if (!panPattern.test(panValue)) {
+      alert("Enter correct PAN number");
+      return;
+    }
+
+    if (aadhaarValue.length !== 12) {
+      alert("Please enter correct Aadhaar number");
+      return;
+    }
+
+    if (!dob || age < 18 || age > 150) {
+      alert("Your date of birth is not acceptable");
+      return;
+    }
+
+    await fetchCurrentProductAmount();
+    if (Number(currentProductAmount || 0) <= 0) {
+      alert("Product amount load nahi hua. Thodi der baad dobara try karein.");
+      return;
+    }
+
+    const leadData = {
+      name: name,
+      fName: fatherName,
+      mName: motherName,
+      emailId: email,
+      contactNo: mobile,
+      aadharLinkedNo: aadhaarMobile,
+      aadharNo: aadhaarValue,
+      panNo: panValue,
+      dob: dob,
+      product: {
+        [cleanProductKey(appName)]: getProductSubmitData()
+      }
+    };
+
+    try {
+      const leadsRef = ref(db, `users/${refId}/productEarnings/leads`);
+      const snapshot = await get(leadsRef);
+      const leadEmailKey = cleanLeadEmailKey(email);
+      const rootLeadIdentityData = getRootLeadIdentityData(leadData);
+
+      const oldLeads = snapshot.exists()
+        ? Object.entries(snapshot.val()).map(([id, item]) => ({ id, ...(item || {}) }))
+        : [];
+
+      const leadId = leadEmailKey;
+      const matchingLead = oldLeads.find((oldLead) => {
+        return oldLead.id === leadId || isSameLead(oldLead, leadData);
+      });
+
+      if (matchingLead) {
+        if (hasSameProduct(matchingLead, appName)) {
+          alert("Ye lead is product ke liye pehle se submitted hai");
+          window.location.href = redirectUrl;
+          return;
+        }
+
+        const duplicateLead = await findDuplicateProductLeadOutsideCurrentLead(panValue, aadhaarValue, appName, matchingLead.id);
+        if (duplicateLead) {
+          alert("Ye lead is product ke liye pehle se submitted hai");
+          window.location.href = redirectUrl;
+          return;
+        }
+
+        const productKey = cleanProductKey(appName);
+        const nextProductData = {
+          ...getMigratedProductObject(matchingLead),
+          [productKey]: getProductSubmitData()
+        };
+        const productOnlyLeadData = getProductOnlyLeadData(nextProductData);
+
+        await update(ref(db, `users/${refId}/productEarnings/leads/${matchingLead.id}`), {
+          ...productOnlyLeadData
+        });
+
+        try {
+          await saveRootLeadIdentity(leadEmailKey, rootLeadIdentityData);
+        } catch (mirrorError) {
+          console.warn("Root lead identity write skipped:", mirrorError);
+        }
+
+        alert("Success");
+        window.location.href = redirectUrl;
+        return;
+      }
+
+      const duplicateLead = await findDuplicateProductLead(panValue, aadhaarValue, appName);
+      if (duplicateLead) {
+        alert("Ye lead is product ke liye pehle se submitted hai");
+        window.location.href = redirectUrl;
+        return;
+      }
+
+      const productOnlyLeadData = getProductOnlyLeadData(leadData.product);
+
+      await update(ref(db, `users/${refId}/productEarnings/leads/${leadId}`), productOnlyLeadData);
+
+      try {
+        await saveRootLeadIdentity(leadEmailKey, rootLeadIdentityData);
+      } catch (mirrorError) {
+        console.warn("Root lead identity write skipped:", mirrorError);
+      }
+
+      alert("Success");
+      window.location.href = redirectUrl;
+
+    } catch (err) {
+      console.error("Lead submit failed:", err);
+      alert(`Failed to submit lead: ${err?.message || "Firebase error"}`);
+    }
+  });
+}
+</script>
+<script type="module" src="assets/premium-access.js"></script>
+
+</body>
+</html>

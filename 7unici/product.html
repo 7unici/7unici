@@ -1,0 +1,1275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Product Referral</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --color-primary:#2563EB;
+  --color-primary-hover:#1D4ED8;
+  --color-secondary:#14B8A6;
+  --text-primary:#0F172A;
+  --text-secondary:#334155;
+  --text-muted:#64748B;
+  --bg:#F8FAFC;
+  --white:#FFFFFF;
+  --border:#E2E8F0;
+  --radius:16px;
+  --radius-xl:24px;
+  --shadow:0 10px 15px rgba(0,0,0,0.10);
+  --gradient:linear-gradient(135deg,#2563EB,#14B8A6);
+  --font:'Inter', sans-serif;
+  --font2:'Poppins', sans-serif;
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body{
+  font-family:var(--font);
+  background:var(--bg);
+  display:flex;
+  justify-content:center;
+  padding:20px;
+}
+
+.container{
+  width:100%;
+  max-width:420px;
+  background:var(--white);
+  border-radius:var(--radius-xl);
+  box-shadow:var(--shadow);
+  overflow:hidden;
+}
+
+.header{
+  background:var(--gradient);
+  color:#fff;
+  text-align:center;
+  padding:25px;
+}
+
+.header h1{
+  font-family:var(--font2);
+  font-size:22px;
+}
+
+.header p{
+  font-size:13px;
+  opacity:0.9;
+}
+
+.profile{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:15px;
+  border-bottom:1px solid var(--border);
+}
+
+.profile img{
+  width:55px;
+  height:55px;
+  border-radius:50%;
+  object-fit:cover;
+  border:2px solid #e2e8f0;
+}
+
+.profile h3{
+  font-size:16px;
+  color:var(--text-primary);
+}
+
+.profile p{
+  font-size:13px;
+  color:var(--text-muted);
+  word-break:break-word;
+}
+
+.stats{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin:15px;
+}
+
+.stats div{
+  background:#fff;
+  padding:14px;
+  border-radius:14px;
+  border:1px solid var(--border);
+  font-size:13px;
+}
+
+.stats span{
+  display:block;
+  font-size:18px;
+  font-weight:700;
+  margin-top:5px;
+}
+
+.statusWrap{
+  margin:15px;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+
+.statusCard{
+  background:#fff;
+  border:1px solid var(--border);
+  border-radius:16px;
+  overflow:hidden;
+  box-shadow:0 2px 8px rgba(0,0,0,0.04);
+  cursor:pointer;
+}
+
+.statusHead{
+  display:flex;
+  justify-content:space-between;
+  padding:14px;
+  font-size:14px;
+  font-weight:600;
+  background:#f8fafc;
+}
+
+.statusHead b{
+  font-size:16px;
+}
+
+.list{
+  overflow-x:auto;
+  display:none;
+  padding:10px 14px;
+}
+
+.leadRow{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  min-width:max-content;
+  white-space:nowrap;
+}
+
+.leadRow span{
+  font-size:12px;
+  color:var(--text-secondary);
+}
+
+.leadRow .leadName{
+  font-weight:700;
+  color:var(--text-primary);
+}
+
+.emptyList{
+  font-size:13px;
+  color:var(--text-muted);
+  padding:10px;
+}
+
+.listItem{
+  padding:10px;
+  border-bottom:1px solid #eee;
+  font-size:13px;
+}
+
+.listItem:last-child{
+  border-bottom:none;
+}
+
+.linkBox{
+  margin:15px;
+  background:#fff;
+  padding:12px;
+  border-radius:var(--radius);
+  border:1px solid var(--border);
+}
+
+#linkInput{
+  width:100%;
+  border:none;
+  outline:none;
+  font-size:13px;
+  color:var(--text-primary);
+  background:transparent;
+}
+
+.btnRow{
+  display:flex;
+  gap:12px;
+  margin:15px;
+}
+
+.btnRow button{
+  flex:1;
+  height:52px;
+  min-width:0;
+  border:none;
+  border-radius:14px;
+  font-size:14px;
+  font-weight:700;
+  font-family:var(--font);
+  cursor:pointer;
+  transition:0.25s;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  box-shadow:0 4px 10px rgba(0,0,0,0.08);
+}
+
+.btnRow button:active{
+  transform:scale(0.97);
+}
+
+.copy{
+  background:#2563EB;
+  color:#fff;
+}
+
+.copy:hover{
+  background:#1D4ED8;
+}
+
+#shareBtn{
+  background:linear-gradient(135deg,#2563EB,#14B8A6);
+  color:#fff;
+}
+
+.open{
+  background:#14B8A6;
+  color:#fff;
+}
+
+.menu{
+  display:flex;
+  overflow-x:auto;
+  gap:8px;
+  margin:15px;
+}
+
+.menu div{
+  padding:8px 12px;
+  background:#fff;
+  border-radius:999px;
+  font-size:12px;
+  cursor:pointer;
+  border:1px solid var(--border);
+  white-space:nowrap;
+}
+
+.menu .active{
+  background:var(--color-primary);
+  color:#fff;
+}
+
+.card{
+  margin:15px;
+  background:#fff;
+  padding:14px;
+  border-radius:var(--radius);
+  border:1px solid var(--border);
+  color:var(--text-secondary);
+  font-size:14px;
+  font-weight:500;
+  line-height:1.55;
+}
+
+.card ul,.card ol{
+  padding-left:18px;
+  display:grid;
+  gap:7px;
+}
+
+.videoBox{
+  width:100%;
+  overflow:hidden;
+  border:1px solid var(--border);
+  border-radius:14px;
+  background:#0f172a;
+  margin-bottom:14px;
+}
+
+.videoBox.long{
+  aspect-ratio:16/9;
+}
+
+.videoBox.short{
+  width:min(100%,220px);
+  aspect-ratio:9/16;
+  margin:14px auto 0;
+}
+
+.videoBox iframe{
+  width:100%;
+  height:100%;
+  border:0;
+  display:block;
+}
+
+.workText{
+  margin:2px 0;
+}
+
+.faqList{
+  display:grid;
+  gap:9px;
+}
+
+.faqItem{
+  border:1px solid var(--border);
+  border-radius:14px;
+  overflow:hidden;
+  background:#fff;
+}
+
+.faqQuestion{
+  width:100%;
+  min-height:46px;
+  border:0;
+  background:#f8fafc;
+  color:var(--text-primary);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  padding:12px;
+  font-size:14px;
+  font-weight:700;
+  text-align:left;
+  cursor:pointer;
+}
+
+.faqQuestion span:first-child{
+  min-width:0;
+}
+
+.faqIcon{
+  flex:0 0 auto;
+  color:var(--color-primary);
+}
+
+.faqAnswer{
+  display:none;
+  padding:12px;
+  border-top:1px solid var(--border);
+  color:var(--text-secondary);
+}
+
+.faqItem.open .faqAnswer{
+  display:block;
+}
+
+.hidden{display:none;}
+
+.state{
+  padding:42px 22px;
+  text-align:center;
+}
+
+.state h1{
+  font-family:var(--font2);
+  font-size:22px;
+  color:var(--text-primary);
+}
+
+.state p{
+  margin-top:8px;
+  color:var(--text-muted);
+  font-size:13px;
+  font-weight:600;
+  line-height:1.5;
+}
+</style>
+</head>
+
+<body>
+<div class="container" id="app">
+  <div class="state">
+    <h1>Loading product...</h1>
+    <p>Firebase se product data aa raha hai.</p>
+  </div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+
+import {
+  getAuth,
+  onAuthStateChanged,
+  signOut
+} from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
+
+import {
+  getDatabase,
+  ref,
+  get,
+  onValue,
+  update
+} from "https://www.gstatic.com/firebasejs/10.12.5/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDIS8wAIqjSfLaUurqiF2kJe6mcEQLuz8w",
+  authDomain: "sameerswaraj-15d99.firebaseapp.com",
+  databaseURL: "https://sameerswaraj-15d99-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "sameerswaraj-15d99",
+  storageBucket: "sameerswaraj-15d99.firebasestorage.app",
+  messagingSenderId: "1041213217954",
+  appId: "1:1041213217954:web:810f484ecb32148aac4bfb"
+};
+
+const productFirebaseConfig = {
+  apiKey: "AIzaSyCn1bDwN8aLm6RS0BDzg_XpGOgV1RTwUqk",
+  authDomain: "sameerswaraj-d5c6c.firebaseapp.com",
+  databaseURL: "https://sameerswaraj-d5c6c-default-rtdb.firebaseio.com",
+  projectId: "sameerswaraj-d5c6c",
+  storageBucket: "sameerswaraj-d5c6c.firebasestorage.app",
+  messagingSenderId: "870125763210",
+  appId: "1:870125763210:web:fa0ff707eec4612c2b4b73",
+  measurementId: "G-06F85Q4ZVS"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getDatabase(app);
+const productApp = initializeApp(productFirebaseConfig, "productData");
+const productDb = getDatabase(productApp);
+const appBox = document.getElementById("app");
+const fallbackPhoto = "assets/favicon.jpg";
+
+let referralLink = "";
+let leads = [];
+let rootLeads = {};
+let productAmount = 0;
+let currentProduct = null;
+let currentProductKey = "";
+
+function setText(id, value) {
+  const el = document.getElementById(id);
+  if (el) el.textContent = value;
+}
+
+function cleanText(value, fallback = "") {
+  return String(value ?? fallback).trim();
+}
+
+function cleanLeadEmailKey(value) {
+  return String(value || "")
+    .trim()
+    .toLowerCase()
+    .replace(/\./g, ",")
+    .replace(/[#$\/[\]]/g, "-");
+}
+
+function formatMoney(amount) {
+  return `Rs ${Number(amount || 0).toLocaleString("en-IN")}`;
+}
+
+function toAmount(value) {
+  const amount = Number(String(value ?? "0").replace(/[^\d.]/g, ""));
+  return Number.isFinite(amount) ? amount : 0;
+}
+
+function escapeHtml(value) {
+  return String(value || "").replace(/[&<>"']/g, (m) => {
+    return {
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      '"': "&quot;",
+      "'": "&#039;"
+    }[m];
+  });
+}
+
+function slugify(value) {
+  return cleanText(value)
+    .toLowerCase()
+    .replace(/[.#$/[\]]/g, "")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
+function compact(value) {
+  return slugify(value).replaceAll("-", "");
+}
+
+function productPageKeys(value) {
+  const clean = cleanText(value);
+  const slug = slugify(clean);
+  return [...new Set([clean, slug, compact(clean)].filter(Boolean))];
+}
+
+function getProductQuery() {
+  const params = new URLSearchParams(window.location.search);
+  return params.get("p") || params.get("product") || params.get("id") || "";
+}
+
+function redirectToMain() {
+  window.location.replace("../main.html");
+}
+
+function getProductSource(data) {
+  if (!data || typeof data !== "object") return {};
+  if (data.products && typeof data.products === "object") return data.products;
+  if (data.product && typeof data.product === "object") return data.product;
+  if (data.categories && typeof data.categories === "object") return data.categories;
+  return data;
+}
+
+function isProductNode(value) {
+  return Boolean(value && typeof value === "object" && ("link" in value || "logo" in value || "rupee" in value));
+}
+
+function normalizeAdminProducts(data) {
+  const list = [];
+  const source = getProductSource(data);
+
+  Object.entries(source || {}).forEach(([categoryKey, categoryValue]) => {
+    if (!categoryValue || typeof categoryValue !== "object") return;
+
+    Object.entries(categoryValue).forEach(([productKey, productValue]) => {
+      if (productKey.toLowerCase() === "more") return;
+      if (!isProductNode(productValue)) return;
+
+      const name = cleanText(productValue.name || productKey);
+      list.push({
+        key: slugify(name) || productKey,
+        category: categoryKey,
+        name,
+        link: productValue.link || "",
+        logo: productValue.logo || "",
+        rupee: toAmount(productValue.rupee || productValue.amount || 0),
+        amount: toAmount(productValue.amount || productValue.rupee || 0),
+        pageTitle: productValue.pageTitle || `${name} Referral`,
+        subtitle: productValue.subtitle || "Invest - Trade - Earn Rewards",
+        overview: productValue.overview || "Overview i am boss",
+        benefits: productValue.benefits || "Benefits",
+        howItWorks: productValue.howItWorks || "How it Works",
+        howItWorksLongVideo: productValue.howItWorksLongVideo || productValue.longVideo || productValue.youtubeLongVideo || "",
+        howItWorksShortVideo: productValue.howItWorksShortVideo || productValue.shortVideo || productValue.youtubeShortVideo || "",
+        earnDetails: productValue.earnDetails || "Earn",
+        faq: productValue.faq || "FAQ",
+        ctaText: productValue.ctaText || "Open Account",
+        hidden: productValue.hidden === true || productValue.hide === true || productValue.isHidden === true
+      });
+    });
+  });
+
+  return list;
+}
+
+async function fetchProductData(productQuery) {
+  const variants = productPageKeys(productQuery);
+
+  for (const key of variants) {
+    try {
+      const productSnap = await get(ref(db, `products/${key}`));
+      if (productSnap.exists()) {
+        return { key: slugify(key) || key, data: productSnap.val() || {} };
+      }
+    } catch (error) {
+      console.warn("Product mirror read skipped:", error);
+    }
+  }
+
+  try {
+    const snapshot = await get(ref(productDb));
+    const products = normalizeAdminProducts(snapshot.exists() ? snapshot.val() : {});
+    const wanted = variants.map(compact);
+    const match = products.find((product) => {
+      return wanted.includes(compact(product.key)) || wanted.includes(compact(product.name));
+    });
+
+    if (match) {
+      const { key, ...data } = match;
+      return { key, data };
+    }
+  } catch (error) {
+    console.warn("Admin product fallback read skipped:", error);
+  }
+
+  return null;
+}
+
+function renderState(title, message) {
+  appBox.innerHTML = `
+    <div class="state">
+      <h1>${escapeHtml(title)}</h1>
+      <p>${escapeHtml(message)}</p>
+    </div>
+  `;
+}
+
+function lines(value) {
+  return cleanText(value).split(/\r?\n/).map((line) => line.trim()).filter(Boolean);
+}
+
+function renderLines(value, fallback, ordered = false) {
+  const items = lines(value);
+  if (!items.length) return escapeHtml(fallback);
+  const tag = ordered ? "ol" : "ul";
+  return `<${tag}>${items.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}</${tag}>`;
+}
+
+function getYouTubeEmbedUrl(value) {
+  const raw = cleanText(value);
+  if (!raw) return "";
+
+  try {
+    const url = new URL(raw);
+    const host = url.hostname.replace(/^www\./, "");
+    let id = "";
+
+    if (host === "youtu.be") {
+      id = url.pathname.split("/").filter(Boolean)[0] || "";
+    } else if (host.includes("youtube.com")) {
+      if (url.pathname.startsWith("/embed/")) {
+        id = url.pathname.split("/").filter(Boolean)[1] || "";
+      } else if (url.pathname.startsWith("/shorts/")) {
+        id = url.pathname.split("/").filter(Boolean)[1] || "";
+      } else {
+        id = url.searchParams.get("v") || "";
+      }
+    }
+
+    return id ? `https://www.youtube.com/embed/${encodeURIComponent(id)}` : "";
+  } catch (error) {
+    return "";
+  }
+}
+
+function renderVideo(url, type) {
+  const embedUrl = getYouTubeEmbedUrl(url);
+  if (!embedUrl) return "";
+  const title = type === "short" ? "Short tutorial video" : "Long tutorial video";
+  return `
+    <div class="videoBox ${type}">
+      <iframe src="${escapeHtml(embedUrl)}" title="${title}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+    </div>
+  `;
+}
+
+function renderHowItWorks(product) {
+  return `
+    ${renderVideo(product.howItWorksLongVideo, "long")}
+    <div class="workText">${renderLines(product.howItWorks, "How it Works", true)}</div>
+    ${renderVideo(product.howItWorksShortVideo, "short")}
+  `;
+}
+
+function getFaqItems(value) {
+  if (Array.isArray(value)) {
+    return value.map((item) => ({
+      question: cleanText(item?.question || item?.q || item?.title),
+      answer: cleanText(item?.answer || item?.a || item?.text)
+    })).filter((item) => item.question && item.answer);
+  }
+
+  if (value && typeof value === "object") {
+    return Object.entries(value).map(([question, answer]) => ({
+      question: cleanText(answer?.question || answer?.q || question),
+      answer: cleanText(answer?.answer || answer?.a || answer)
+    })).filter((item) => item.question && item.answer);
+  }
+
+  return lines(value).map((line) => {
+    const parts = line.split(/\s(?:-|:|=>)\s/);
+    if (parts.length < 2) return { question: line, answer: "" };
+    return {
+      question: cleanText(parts.shift()),
+      answer: cleanText(parts.join(" - "))
+    };
+  }).filter((item) => item.question && item.answer);
+}
+
+function renderFaq(value) {
+  const items = getFaqItems(value);
+  if (!items.length) return escapeHtml("FAQ");
+
+  return `
+    <div class="faqList">
+      ${items.map((item, index) => `
+        <div class="faqItem ${index === 0 ? "open" : ""}">
+          <button class="faqQuestion" type="button" data-faq-index="${index}">
+            <span>${escapeHtml(item.question)}</span>
+            <span class="faqIcon">${index === 0 ? "-" : "+"}</span>
+          </button>
+          <div class="faqAnswer">${escapeHtml(item.answer)}</div>
+        </div>
+      `).join("")}
+    </div>
+  `;
+}
+
+function renderProductPage(product, userProfile) {
+  const name = cleanText(product.name || currentProductKey, "Product");
+  const title = cleanText(product.pageTitle, `${name} Referral`);
+  const subtitle = cleanText(product.subtitle, "Invest - Trade - Earn Rewards");
+  const ctaText = cleanText(product.ctaText, "Open Account");
+
+  productAmount = toAmount(product.amount || product.rupee || 0);
+  document.title = title;
+
+  appBox.innerHTML = `
+    <div class="header">
+      <h1>${escapeHtml(title)}</h1>
+      <p>${escapeHtml(subtitle)}</p>
+    </div>
+
+    <div class="profile">
+      <img id="photo" src="${escapeHtml(userProfile.photo || fallbackPhoto)}" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='${fallbackPhoto}'">
+      <div>
+        <h3 id="name">${escapeHtml(userProfile.name || "7unici")}</h3>
+        <p id="email">${escapeHtml(userProfile.email || "support@7unici.com")}</p>
+      </div>
+    </div>
+
+    <div class="stats">
+      <div>
+        Total Leads <span id="total">0</span>
+      </div>
+
+      <div>
+        Earnings <span id="earnings">Rs 0</span>
+      </div>
+    </div>
+
+    <div class="statusWrap">
+      <div class="statusCard" onclick="toggleList('success')">
+        <div class="statusHead">
+          <span>Success Leads</span>
+          <b id="success">0</b>
+        </div>
+        <div id="successList" class="list"></div>
+      </div>
+
+      <div class="statusCard" onclick="toggleList('process')">
+        <div class="statusHead">
+          <span>Process Leads</span>
+          <b id="process">0</b>
+        </div>
+        <div id="processList" class="list"></div>
+      </div>
+
+      <div class="statusCard" onclick="toggleList('reject')">
+        <div class="statusHead">
+          <span>Reject Leads</span>
+          <b id="reject">0</b>
+        </div>
+        <div id="rejectList" class="list"></div>
+      </div>
+    </div>
+
+    <div class="linkBox">
+      <input type="text" id="linkInput" readonly placeholder="Referral link loading..." value="${escapeHtml(referralLink)}" />
+    </div>
+
+    <div class="btnRow">
+      <button class="copy" onclick="copyLink()">Copy</button>
+      <button id="shareBtn">Share</button>
+      <button class="open" onclick="openLink()">${escapeHtml(ctaText)}</button>
+    </div>
+
+    <div class="menu">
+      <div onclick="tab('overview',this)" class="active">Overview</div>
+      <div onclick="tab('benefits',this)">Benefits</div>
+      <div onclick="tab('work',this)">How it Works</div>
+      <div onclick="tab('earn',this)">Earn</div>
+      <div onclick="tab('faq',this)">FAQ</div>
+    </div>
+
+    <div id="overview" class="card">${renderLines(product.overview, "Overview i am boss")}</div>
+    <div id="benefits" class="card hidden">${renderLines(product.benefits, "Benefits")}</div>
+    <div id="work" class="card hidden">${renderHowItWorks(product)}</div>
+    <div id="earn" class="card hidden">${renderLines(product.earnDetails, "Earn")}</div>
+    <div id="faq" class="card hidden">${renderFaq(product.faq)}</div>
+  `;
+
+  document.getElementById("shareBtn").addEventListener("click", shareLink);
+  bindFaqAccordion();
+}
+
+function bindFaqAccordion() {
+  document.querySelectorAll(".faqQuestion").forEach((button) => {
+    button.addEventListener("click", () => {
+      const item = button.closest(".faqItem");
+      const isOpen = item.classList.contains("open");
+
+      document.querySelectorAll(".faqItem").forEach((faqItem) => {
+        faqItem.classList.remove("open");
+        const icon = faqItem.querySelector(".faqIcon");
+        if (icon) icon.textContent = "+";
+      });
+
+      if (!isOpen) {
+        item.classList.add("open");
+        const icon = item.querySelector(".faqIcon");
+        if (icon) icon.textContent = "-";
+      }
+    });
+  });
+}
+
+function maskEmail(email) {
+  const value = String(email || "");
+  const parts = value.split("@");
+
+  if (parts.length !== 2) return "N/A";
+
+  const namePart = parts[0];
+  const domainPart = parts[1];
+  const domainPieces = domainPart.split(".");
+  const domainName = domainPieces[0] || "";
+  const domainExt = domainPieces.slice(1).join(".");
+
+  const maskedName =
+    namePart.length <= 2
+      ? namePart[0] + "x"
+      : namePart[0] + "x".repeat(Math.max(namePart.length - 2, 1)) + namePart[namePart.length - 1];
+
+  const maskedDomain = domainName ? "x".repeat(domainName.length) : "x";
+
+  return `${maskedName}@${maskedDomain}${domainExt ? "." + domainExt : ""}`;
+}
+
+function maskPhone(phone) {
+  const value = String(phone || "").replace(/\D/g, "");
+
+  if (!value) return "N/A";
+  if (value.length === 1) return value;
+
+  return value[0] + "x".repeat(Math.max(value.length - 2, 1)) + value[value.length - 1];
+}
+
+function normalizeStatus(status) {
+  const value = String(status || "process").toLowerCase().trim();
+
+  if (value === "success") return "success";
+  if (value === "reject") return "reject";
+
+  return "process";
+}
+
+function getRootLeadIdentity(lead = {}) {
+  const leadKey = cleanText(lead._leadId || lead.leadId || lead.id).split("_")[0];
+  const emailKey = cleanLeadEmailKey(lead.emailId || lead.Email || lead.email);
+  return rootLeads[emailKey] ||
+    rootLeads[leadKey] ||
+    rootLeads[cleanLeadEmailKey(leadKey)] ||
+    {};
+}
+
+function getLeadName(lead) {
+  const rootLead = getRootLeadIdentity(lead);
+  return lead.Name || lead.name || rootLead.fullName || rootLead.name || "N/A";
+}
+
+function getLeadEmail(lead) {
+  const rootLead = getRootLeadIdentity(lead);
+  return lead.emailId || lead.Email || lead.email || rootLead.emailId || rootLead.email || "N/A";
+}
+
+function getLeadContact(lead) {
+  const rootLead = getRootLeadIdentity(lead);
+  return lead["Contact no"] || lead.contactNo || lead.contact || lead.mobile || rootLead.contactNo || rootLead.contactNumber || "";
+}
+
+function getLeadAadhaarMobile(lead) {
+  const rootLead = getRootLeadIdentity(lead);
+  return lead.aadharLinkedNo ||
+    lead.aadhaarLinkedNo ||
+    lead["Aadhar linked mob no"] ||
+    lead["Aadhar Linked Mob. no."] ||
+    lead.aadhaarLinkedMobile ||
+    rootLead.aadharLinkedMobNo ||
+    rootLead.aadhaarLinkedMobileNo ||
+    rootLead.aadhaarMobile ||
+    "";
+}
+
+function getExpectedEarn(lead) {
+  const status = normalizeStatus(lead.status);
+
+  if (status === "success") {
+    return Number(lead.amount || lead.appAmount || lead.price || lead.productAmount || 0);
+  }
+
+  return 0;
+}
+
+function getSavedLeadAmount(lead) {
+  return Number(lead.amount || lead.appAmount || lead.price || lead.productAmount || 0);
+}
+
+function normalizeProductName(value) {
+  return slugify(value);
+}
+
+function getLeadProducts(lead = {}) {
+  const productRoot = lead.product && typeof lead.product === "object" ? "product" : "products";
+  const productData = productRoot === "product" ? lead.product : lead.products;
+  const products = productData && typeof productData === "object"
+    ? Object.entries(productData).map(([productId, product]) => ({
+        ...lead,
+        ...(product || {}),
+        appName: product?.appName || productId,
+        productName: product?.productName || productId,
+        product: product?.product || productId,
+        id: `${lead.id}_${productId}`,
+        _leadId: lead.id,
+        _productId: productId,
+        _productRoot: productRoot,
+        _nestedProduct: true
+      }))
+    : [];
+
+  if (!products.length && (lead.appName || lead.productName || lead.product)) {
+    products.push({
+      ...lead,
+      _leadId: lead.id,
+      _productId: "",
+      _nestedProduct: false
+    });
+  }
+
+  return products.filter((product) => {
+    return product.hidden !== true && product.hide !== true && product.isHidden !== true;
+  });
+}
+
+function matchesCurrentProduct(lead = {}) {
+  const leadAppName = normalizeProductName(lead.appName || lead.productName || lead.product);
+  return leadAppName === currentProductKey ||
+    leadAppName.replaceAll("-", "") === currentProductKey.replaceAll("-", "");
+}
+
+function getLeadUpdatePath(uid, lead, field) {
+  if (lead._nestedProduct && lead._productId) {
+    return `users/${uid}/productEarnings/leads/${lead._leadId}/${lead._productRoot || "product"}/${lead._productId}/${field}`;
+  }
+
+  return `users/${uid}/productEarnings/leads/${lead._leadId || lead.id}/${field}`;
+}
+
+async function syncLeadEarnings(uid, productLeads, allProductRows) {
+  const updates = {};
+
+  productLeads.forEach((lead) => {
+    const status = normalizeStatus(lead.status);
+    const statusChanged = lead.status !== status;
+    const expectedEarn = status === "success" ? getSavedLeadAmount(lead) : 0;
+    const currentEarn = Number(lead.earn || 0);
+    const earnChanged = currentEarn !== expectedEarn;
+
+    if (statusChanged || earnChanged) {
+      updates[getLeadUpdatePath(uid, lead, "status")] = status;
+      updates[getLeadUpdatePath(uid, lead, "earn")] = expectedEarn;
+    }
+
+    lead.status = status;
+    lead.earn = expectedEarn;
+  });
+
+  const productEarnings = allProductRows.reduce((sum, lead) => {
+    return sum + (normalizeStatus(lead.status) === "success" ? getSavedLeadAmount(lead) : 0);
+  }, 0);
+
+  updates[`users/${uid}/productEarnings/totalEarning`] = productEarnings;
+
+  if (Object.keys(updates).length > 0) {
+    await update(ref(db), updates);
+  }
+}
+
+async function fetchUser(uid) {
+  const snap = await get(ref(db, `users/${uid}`));
+  return snap.exists() ? snap.val() : null;
+}
+
+function getGoogleProvider(user) {
+  return user?.providerData?.find((provider) => provider.providerId === "google.com") || user?.providerData?.[0] || {};
+}
+
+function getLiveAuthData(user) {
+  const provider = getGoogleProvider(user);
+  return {
+    name: provider.displayName || user?.displayName || user?.email?.split("@")[0] || "",
+    email: provider.email || user?.email || "",
+    photo: provider.photoURL || user?.photoURL || ""
+  };
+}
+
+function getBanInfo(data = {}) {
+  const authData = data.authData || {};
+  const banType = authData.banType || data.banType || "none";
+  const banUntil = Number(authData.banUntil || data.banUntil || 0);
+  const permanent = banType === "permanent" || authData.banPermanent === true || data.banPermanent === true;
+  const temporaryActive = banType === "temporary" && banUntil > Date.now();
+  const flaggedActive = (authData.isBanned === true || data.isBanned === true) && banType !== "temporary";
+  const active = permanent || temporaryActive || flaggedActive;
+  return { active, type: permanent ? "permanent" : temporaryActive ? "temporary" : "none", until: temporaryActive ? banUntil : 0 };
+}
+
+async function blockBannedUser(data = {}) {
+  const ban = getBanInfo(data);
+  if (!ban.active) return false;
+  const message = ban.type === "temporary" && ban.until
+    ? `Aapka account ${new Date(ban.until).toLocaleString("en-IN")} tak banned hai.`
+    : "Aapka account banned hai. Admin se contact karein.";
+  alert(message);
+  await signOut(auth).catch(() => {});
+  localStorage.removeItem("loginRedirect");
+  window.location.href = "auth.html";
+  return true;
+}
+
+function withCacheBust(url) {
+  if (!url) return "";
+  return url + (url.includes("?") ? "&" : "?") + "t=" + Date.now();
+}
+
+function resolveUser(data, authUser) {
+  const live = getLiveAuthData(authUser);
+  return {
+    name: live.name || data?.authData?.name || data?.Name || data?.name || data?.displayName || "7unici",
+    email: live.email || data?.authData?.email || data?.Email || data?.email || "support@7unici.com",
+    photo: live.photo || data?.authData?.photo || data?.Photo || data?.photo || data?.photoURL || fallbackPhoto
+  };
+}
+
+function generateReferralLink(uid) {
+  const amount = toAmount(productAmount || currentProduct?.amount || currentProduct?.rupee || 0);
+  referralLink = `${window.location.origin}/leads.html?p=${currentProductKey}&r=${uid}&a=${encodeURIComponent(amount)}`;
+}
+
+function closeAllListsExcept(activeType) {
+  const map = {
+    success: "successList",
+    process: "processList",
+    reject: "rejectList"
+  };
+
+  Object.entries(map).forEach(([type, listId]) => {
+    if (type === activeType) return;
+
+    const listEl = document.getElementById(listId);
+    if (listEl) listEl.style.display = "none";
+  });
+}
+
+function renderOpenList() {
+  const openList = document.querySelector(".list[style*='block']");
+  if (!openList) return;
+
+  const typeMap = {
+    successList: "success",
+    processList: "process",
+    rejectList: "reject"
+  };
+
+  const type = typeMap[openList.id];
+  if (type) renderList(type, openList);
+}
+
+function renderList(type, el) {
+  const filtered = leads.filter((lead) => normalizeStatus(lead.status) === type);
+
+  el.innerHTML = filtered.map((lead) => `
+    <div class="listItem leadRow">
+      <span class="leadName">${escapeHtml(getLeadName(lead))}</span>
+      <span>${escapeHtml(maskEmail(getLeadEmail(lead)))}</span>
+      <span>${escapeHtml(maskPhone(getLeadContact(lead)))}</span>
+      <span>${escapeHtml(maskPhone(getLeadAadhaarMobile(lead)))}</span>
+      ${type === "success" ? `<span>${escapeHtml(formatMoney(getSavedLeadAmount(lead)))}</span>` : ""}
+    </div>
+  `).join("") || `<div class="emptyList">No data</div>`;
+}
+
+function listenProductLeads(uid) {
+  const leadsRef = ref(db, `users/${uid}/productEarnings/leads`);
+
+  onValue(leadsRef, async (snapshot) => {
+    const allLeads = snapshot.exists()
+      ? Object.entries(snapshot.val()).map(([id, value]) => ({
+          id,
+          ...value
+        }))
+      : [];
+
+    const allProductRows = allLeads.flatMap(getLeadProducts);
+    const productLeads = allProductRows.filter(matchesCurrentProduct);
+
+    await syncLeadEarnings(uid, productLeads, allProductRows);
+
+    leads = productLeads.map((lead) => ({
+      ...lead,
+      status: normalizeStatus(lead.status),
+      earn: getExpectedEarn(lead)
+    }));
+
+    const successLeads = leads.filter((lead) => lead.status === "success");
+    const processLeads = leads.filter((lead) => lead.status === "process");
+    const rejectLeads = leads.filter((lead) => lead.status === "reject");
+
+    const totalEarnings = successLeads.reduce((sum, lead) => {
+      return sum + getSavedLeadAmount(lead);
+    }, 0);
+
+    setText("success", successLeads.length);
+    setText("process", processLeads.length);
+    setText("reject", rejectLeads.length);
+    setText("total", leads.length);
+    setText("earnings", formatMoney(totalEarnings));
+
+    renderOpenList();
+  });
+}
+
+function listenRootLeads() {
+  onValue(ref(db, "leads"), (snapshot) => {
+    rootLeads = snapshot.exists() ? snapshot.val() : {};
+    renderOpenList();
+  }, (error) => {
+    console.warn("Root leads lookup failed:", error);
+  });
+}
+
+async function bootProductPage(user) {
+  const productQuery = getProductQuery();
+
+  if (!productQuery) {
+    redirectToMain();
+    return;
+  }
+
+  const found = await fetchProductData(productQuery);
+  if (!found || found.data.hidden === true) {
+    renderState("Product not available", "Is product ka Firebase data nahi mila ya admin se hidden hai.");
+    return;
+  }
+
+  currentProductKey = slugify(found.key || found.data.name || productQuery);
+  currentProduct = found.data;
+
+  const data = await fetchUser(user.uid).catch(() => null);
+  if (await blockBannedUser(data || {})) return;
+  renderProductPage(currentProduct, resolveUser(data, user));
+  generateReferralLink(user.uid);
+  const linkInput = document.getElementById("linkInput");
+  if (linkInput) linkInput.value = referralLink;
+  listenProductLeads(user.uid);
+  listenRootLeads();
+}
+
+onAuthStateChanged(auth, async (user) => {
+  try {
+    if (!user) {
+      const destination = "product.html" + window.location.search + window.location.hash;
+      localStorage.setItem("loginRedirect", destination);
+      window.location.href = "auth.html?redirect=" + encodeURIComponent(destination);
+      return;
+    }
+
+    await user.reload().catch(() => {});
+    await bootProductPage(auth.currentUser || user);
+  } catch (error) {
+    console.error("Product page load failed:", error);
+    renderState("Product load failed", "Firebase data load nahi ho paaya. Console me error check karo.");
+  }
+});
+
+window.toggleList = (type) => {
+  const map = {
+    success: "successList",
+    process: "processList",
+    reject: "rejectList"
+  };
+
+  closeAllListsExcept(type);
+
+  const el = document.getElementById(map[type]);
+  if (!el) return;
+
+  const shouldOpen = el.style.display !== "block";
+  el.style.display = shouldOpen ? "block" : "none";
+
+  if (shouldOpen) {
+    renderList(type, el);
+  }
+};
+
+window.tab = (id, el) => {
+  document.querySelectorAll(".card").forEach((card) => {
+    card.classList.add("hidden");
+  });
+
+  const active = document.getElementById(id);
+  if (active) active.classList.remove("hidden");
+
+  document.querySelectorAll(".menu div").forEach((tab) => {
+    tab.classList.remove("active");
+  });
+
+  el.classList.add("active");
+};
+
+async function shareLink() {
+  if (!referralLink) {
+    alert("Link not ready");
+    return;
+  }
+
+  try {
+    if (navigator.share) {
+      await navigator.share({
+        title: currentProduct?.pageTitle || currentProduct?.name || "Product Referral",
+        text: "Join using my referral link",
+        url: referralLink
+      });
+    } else {
+      await navigator.clipboard.writeText(referralLink);
+      alert("Link copied");
+    }
+  } catch (err) {
+    console.log("Share error:", err);
+  }
+}
+
+window.copyLink = async () => {
+  if (!referralLink) {
+    alert("Link not ready");
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(referralLink);
+
+    const btn = document.querySelector(".copy");
+    btn.innerText = "Copied";
+
+    setTimeout(() => {
+      btn.innerText = "Copy";
+    }, 2000);
+  } catch (err) {
+    const input = document.getElementById("linkInput");
+    input.select();
+    document.execCommand("copy");
+    alert("Link copied");
+  }
+};
+
+window.openLink = () => {
+  if (!referralLink) {
+    alert("Link not ready");
+    return;
+  }
+
+  window.open(referralLink, "_blank");
+};
+</script>
+<script type="module" src="assets/premium-access.js"></script>
+</body>
+</html>

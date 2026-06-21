@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Premium Plans</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--primary:#2563eb;--primary-dark:#1d4ed8;--secondary:#14b8a6;--bg:#f8fafc;--card:#fff;--text:#0f172a;--muted:#64748b;--border:#e2e8f0;--danger:#dc2626;--success:#16a34a;--shadow:0 18px 42px rgba(15,23,42,.14);--soft:0 8px 22px rgba(15,23,42,.08);--heading:'Poppins',sans-serif;--body:'Inter',sans-serif}
+body{min-height:100vh;font-family:var(--body);color:var(--text);background:radial-gradient(circle at 12% 0%,rgba(37,99,235,.13),transparent 32%),radial-gradient(circle at 100% 10%,rgba(20,184,166,.15),transparent 30%),var(--bg)}
+.page{width:100%;max-width:1120px;margin:auto;padding:18px}
+.hero{position:relative;overflow:hidden;border-radius:28px;background:linear-gradient(135deg,var(--primary),var(--secondary));color:#fff;padding:34px 22px;box-shadow:var(--shadow);text-align:center}
+.hero:after{content:"";position:absolute;inset:0;background:linear-gradient(120deg,transparent,rgba(255,255,255,.22),transparent);transform:translateX(-120%);animation:shine 4s ease-in-out infinite}.hero-content{position:relative;z-index:1;max-width:760px;margin:auto}.kicker{display:inline-flex;align-items:center;justify-content:center;padding:7px 12px;border-radius:999px;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.22);font-size:12px;font-weight:900;margin-bottom:14px}.title{font-family:var(--heading);font-size:38px;line-height:1.12}.subtitle{margin:12px auto 0;max-width:640px;color:#e2e8f0;font-size:15px;line-height:1.55;font-weight:700}
+.grid{margin-top:18px;display:grid;grid-template-columns:repeat(3,1fr);gap:16px;align-items:stretch}.card{position:relative;background:rgba(255,255,255,.9);backdrop-filter:blur(18px);border:1px solid rgba(226,232,240,.95);border-radius:24px;padding:20px;box-shadow:var(--soft);transition:.25s ease;overflow:hidden}.card:hover{transform:translateY(-4px);box-shadow:var(--shadow);border-color:#bfdbfe}.card.highlight{border:2px solid rgba(37,99,235,.75);box-shadow:0 20px 46px rgba(37,99,235,.16)}.badge{position:absolute;top:14px;right:14px;background:linear-gradient(135deg,#8b5cf6,var(--primary) 48%,var(--secondary));color:#fff;padding:6px 11px;border-radius:999px;font-size:11px;font-weight:900}.plan-name{font-family:var(--heading);font-size:20px;font-weight:800;padding-right:76px}.plan-text{margin-top:7px;color:var(--muted);font-size:13px;line-height:1.45;font-weight:700}.price{margin-top:18px;display:flex;align-items:flex-end;gap:6px}.price strong{font-size:36px;line-height:1;font-weight:900}.price span{color:var(--muted);font-size:13px;font-weight:800;padding-bottom:4px}.features{list-style:none;margin:20px 0;display:grid;gap:10px}.features li{display:flex;align-items:flex-start;gap:9px;color:#334155;font-size:14px;font-weight:700;line-height:1.35}.check{width:20px;height:20px;flex:0 0 20px;border-radius:50%;background:#ccfbf1;color:#047857;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:900}.btn{width:100%;border:none;border-radius:16px;min-height:48px;padding:12px;cursor:pointer;font-family:var(--body);font-size:14px;font-weight:900;transition:.25s ease}.btn:disabled{opacity:.62;cursor:not-allowed}.btn-primary{background:var(--primary);color:#fff;box-shadow:0 12px 24px rgba(37,99,235,.22)}.btn-primary:hover:not(:disabled){background:var(--primary-dark);transform:translateY(-2px)}.btn-premium{background:linear-gradient(135deg,#8b5cf6,var(--primary) 48%,var(--secondary));color:#fff;box-shadow:0 12px 24px rgba(37,99,235,.22)}.btn-premium:hover:not(:disabled){transform:translateY(-2px)}
+.billing-form{margin-top:16px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:end;background:#fff;border:1px solid var(--border);border-radius:20px;padding:14px;box-shadow:var(--soft)}.field label{display:block;margin-bottom:6px;color:#334155;font-size:12px;font-weight:900}.field input{width:100%;height:46px;border:1px solid var(--border);border-radius:14px;padding:0 13px;outline:none;font:inherit;font-weight:800}.field input:focus{border-color:var(--primary);box-shadow:0 0 0 4px rgba(37,99,235,.1)}.status{margin-top:10px;min-height:20px;color:var(--muted);font-size:13px;font-weight:800;text-align:center}.status.error{color:var(--danger)}.status.success{color:var(--success)}.note{margin-top:16px;padding:14px 16px;border-radius:20px;background:#fff;border:1px solid var(--border);color:var(--muted);font-size:13px;line-height:1.5;text-align:center;box-shadow:var(--soft)}
+@keyframes shine{0%{transform:translateX(-120%)}45%,100%{transform:translateX(120%)}}
+@media(max-width:900px){.grid{grid-template-columns:1fr}.card.highlight{order:-1}}
+@media(max-width:520px){.page{padding:12px}.hero{border-radius:22px;padding:28px 16px}.title{font-size:27px}.subtitle{font-size:13px}.grid{gap:12px}.card{border-radius:20px;padding:17px}.price strong{font-size:32px}.plan-name{font-size:18px}.billing-form{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<main class="page">
+  <section class="hero">
+    <div class="hero-content">
+      <div class="kicker">Premium Access</div>
+      <h1 class="title">Choose Your Premium Plan</h1>
+      <p class="subtitle">Monthly aur yearly plan me pehle Rs 1 activation, phir next 8th se autopay. Lifetime plan one-time payment hai.</p>
+    </div>
+  </section>
+
+  <section class="grid">
+    <div class="card">
+      <h3 class="plan-name">Monthly Plan</h3>
+      <p class="plan-text">Flexible access for regular users.</p>
+      <div class="price"><strong>Rs 499</strong><span>/ month</span></div>
+      <ul class="features">
+        <li><span class="check">✓</span>Full access</li>
+        <li><span class="check">✓</span>Rs 1 activation today</li>
+        <li><span class="check">✓</span>Rs 499 autopay from next 8th</li>
+        <li><span class="check">✓</span>Recurring mandate through Razorpay</li>
+      </ul>
+      <button class="btn btn-primary plan-btn" data-plan="monthly">Start Rs 1 Activation</button>
+    </div>
+
+    <div class="card highlight">
+      <div class="badge">POPULAR</div>
+      <h3 class="plan-name">Yearly Plan</h3>
+      <p class="plan-text">Best value for long-term access.</p>
+      <div class="price"><strong>Rs 4,999</strong><span>/ year</span></div>
+      <ul class="features">
+        <li><span class="check">✓</span>Everything in monthly</li>
+        <li><span class="check">✓</span>Rs 1 activation today</li>
+        <li><span class="check">✓</span>Rs 4,999 autopay from next 8th</li>
+        <li><span class="check">✓</span>Yearly billing cycle</li>
+      </ul>
+      <button class="btn btn-primary plan-btn" data-plan="yearly">Start Rs 1 Activation</button>
+    </div>
+
+    <div class="card">
+      <h3 class="plan-name">Lifetime Plan</h3>
+      <p class="plan-text">One-time purchase for permanent access.</p>
+      <div class="price"><strong>Rs 9,99,999</strong><span>/ one time</span></div>
+      <ul class="features">
+        <li><span class="check">✓</span>Lifetime access</li>
+        <li><span class="check">✓</span>No recurring payment</li>
+        <li><span class="check">✓</span>All features included</li>
+        <li><span class="check">✓</span>Future updates</li>
+      </ul>
+      <button class="btn btn-premium plan-btn" data-plan="lifetime">Buy Lifetime</button>
+    </div>
+  </section>
+
+  <div class="billing-form">
+    <div class="field">
+      <label for="mobile">Mobile number for Razorpay identity</label>
+      <input id="mobile" type="tel" inputmode="numeric" maxlength="10" placeholder="10 digit mobile number">
+    </div>
+    <button class="btn btn-primary" id="saveMobileBtn" type="button">Use Mobile</button>
+  </div>
+  <div class="status" id="statusText">Login ke baad mobile number enter karke plan select karein.</div>
+
+  <div class="note">Payment history Firebase me users/useruid/payment/history ke andar save hogi.</div>
+</main>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
+import { getDatabase, ref, get, update } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDIS8wAIqjSfLaUurqiF2kJe6mcEQLuz8w",
+  authDomain: "sameerswaraj-15d99.firebaseapp.com",
+  databaseURL: "https://sameerswaraj-15d99-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "sameerswaraj-15d99",
+  storageBucket: "sameerswaraj-15d99.firebasestorage.app",
+  messagingSenderId: "1041213217954",
+  appId: "1:1041213217954:web:810f484ecb32148aac4bfb",
+  measurementId: "G-KLS7W2RRSK"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getDatabase(app);
+const mobileInput = document.getElementById("mobile");
+const statusText = document.getElementById("statusText");
+const planButtons = document.querySelectorAll(".plan-btn");
+let currentUser = null;
+
+function setStatus(message, type = "") {
+  statusText.textContent = message;
+  statusText.className = "status" + (type ? " " + type : "");
+}
+
+function cleanMobile(value) {
+  const digits = String(value || "").replace(/\D/g, "");
+  return digits.length === 10 ? digits : "";
+}
+
+function getRedirectDestination() {
+  const params = new URLSearchParams(location.search);
+  const raw = params.get("redirect") || localStorage.getItem("paymentRedirect") || localStorage.getItem("loginRedirect") || "index.html";
+  try {
+    const url = new URL(raw, location.href);
+    if (url.origin !== location.origin) return "index.html";
+    const page = url.pathname.split("/").pop() || "index.html";
+    if (!page.endsWith(".html") || page === "auth.html" || page === "premium.html") return "index.html";
+    return page + url.search + url.hash;
+  } catch (error) {
+    return "index.html";
+  }
+}
+
+function isPaymentActive(payment = {}) {
+  if (payment.lifetime === true && payment.status === "active") return true;
+  return payment.status === "active" && ["monthly", "yearly"].includes(payment.plan);
+}
+
+async function authHeader() {
+  if (!currentUser) throw new Error("Login required.");
+  return { Authorization: "Bearer " + await currentUser.getIdToken() };
+}
+
+async function apiPost(url, body) {
+  const response = await fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      ...(await authHeader())
+    },
+    body: JSON.stringify(body)
+  });
+  const data = await response.json().catch(() => ({}));
+  if (!response.ok) throw new Error(data.error || "Request failed.");
+  return data;
+}
+
+async function saveMobile() {
+  if (!currentUser) return;
+  const mobile = cleanMobile(mobileInput.value);
+  if (!mobile) {
+    setStatus("Valid 10 digit mobile number enter karein.", "error");
+    return;
+  }
+  await update(ref(db, `users/${currentUser.uid}/payment`), { mobile, updatedAt: Date.now() });
+  setStatus("Mobile number saved. Ab plan select karein.", "success");
+}
+
+async function startPayment(plan) {
+  if (!currentUser) {
+    const destination = "premium.html" + location.search + location.hash;
+    localStorage.setItem("loginRedirect", destination);
+    location.href = "auth.html?redirect=" + encodeURIComponent(destination);
+    return;
+  }
+
+  const mobile = cleanMobile(mobileInput.value);
+  if (!mobile) {
+    setStatus("Payment ke liye 10 digit mobile number required hai.", "error");
+    mobileInput.focus();
+    return;
+  }
+
+  planButtons.forEach((button) => button.disabled = true);
+  setStatus("Razorpay checkout ready ho raha hai...");
+
+  try {
+    const checkout = await apiPost("/api/create-checkout", { plan, mobile });
+    const options = {
+      key: checkout.keyId,
+      name: "7unici.com Premium",
+      description: plan === "lifetime" ? "Lifetime access" : `${plan} autopay activation`,
+      currency: checkout.currency || "INR",
+      amount: checkout.amount,
+      order_id: checkout.orderId,
+      subscription_id: checkout.subscriptionId,
+      prefill: {
+        name: checkout.name || currentUser.displayName || "",
+        email: checkout.email || currentUser.email || "",
+        contact: mobile
+      },
+      notes: { plan, mobile },
+      theme: { color: "#2563EB" },
+      handler: async (response) => {
+        setStatus("Payment verify ho raha hai...");
+        await apiPost("/api/verify-checkout", { plan, ...response });
+        localStorage.removeItem("paymentRedirect");
+        localStorage.removeItem("loginRedirect");
+        setStatus("Payment successful. Redirect ho raha hai...", "success");
+        location.replace(getRedirectDestination());
+      }
+    };
+
+    const razorpay = new Razorpay(options);
+    razorpay.on("payment.failed", (response) => {
+      console.warn(response.error);
+      setStatus(response.error?.description || "Payment failed. Dobara try karein.", "error");
+      planButtons.forEach((button) => button.disabled = false);
+    });
+    razorpay.open();
+  } catch (error) {
+    console.error(error);
+    setStatus(error.message || "Payment start nahi ho paaya.", "error");
+    planButtons.forEach((button) => button.disabled = false);
+  }
+}
+
+document.getElementById("saveMobileBtn").addEventListener("click", saveMobile);
+mobileInput.addEventListener("input", () => {
+  mobileInput.value = mobileInput.value.replace(/\D/g, "").slice(0, 10);
+});
+planButtons.forEach((button) => {
+  button.addEventListener("click", () => startPayment(button.dataset.plan));
+});
+
+onAuthStateChanged(auth, async (user) => {
+  if (!user) {
+    const destination = "premium.html" + location.search + location.hash;
+    localStorage.setItem("loginRedirect", destination);
+    location.href = "auth.html?redirect=" + encodeURIComponent(destination);
+    return;
+  }
+
+  currentUser = user;
+  const snapshot = await get(ref(db, `users/${user.uid}/payment`)).catch(() => null);
+  const payment = snapshot?.exists() ? snapshot.val() : {};
+  if (payment.mobile) mobileInput.value = cleanMobile(payment.mobile);
+
+  if (isPaymentActive(payment)) {
+    location.replace(getRedirectDestination());
+    return;
+  }
+
+  setStatus(payment.mobile ? "Plan select karein." : "Mobile number enter karke plan select karein.");
+});
+</script>
+</body>
+</html>

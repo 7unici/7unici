@@ -1,0 +1,32 @@
+{
+  "functions": {
+    "source": "functions"
+  },
+  "hosting": {
+    "public": ".",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**",
+      "functions/**"
+    ],
+    "rewrites": [
+      {
+        "source": "/api/create-checkout",
+        "function": "createCheckout"
+      },
+      {
+        "source": "/api/verify-checkout",
+        "function": "verifyCheckout"
+      },
+      {
+        "source": "/api/razorpay-webhook",
+        "function": "razorpayWebhook"
+      },
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  }
+}

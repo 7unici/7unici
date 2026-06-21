@@ -1,0 +1,1190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Profile</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --primary:#2563EB;--secondary:#14B8A6;--bg:#F8FAFC;--surface:#fff;
+  --text:#0F172A;--muted:#64748B;--border:#E2E8F0;--success:#16A34A;
+  --warning:#F59E0B;--danger:#EF4444;
+  --gradient:linear-gradient(135deg,#2563EB,#14B8A6);
+  --shadow:0 18px 45px rgba(15,23,42,.12);
+  --soft:0 10px 26px rgba(37,99,235,.15);
+  --heading:'Poppins',sans-serif;--body:'Inter',sans-serif;
+}
+body{
+  min-height:100vh;padding:18px;font-family:var(--body);color:var(--text);
+  background:
+    radial-gradient(circle at 12% 8%,rgba(37,99,235,.15),transparent 30%),
+    radial-gradient(circle at 90% 12%,rgba(20,184,166,.16),transparent 32%),
+    linear-gradient(180deg,#F8FAFC,#EEF6FF);
+}
+.page{width:100%;max-width:1120px;margin:auto}
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:18px}
+.brand{display:flex;align-items:center;gap:12px;min-width:0}
+.brand-logo{width:48px;height:48px;border-radius:16px;background:var(--gradient);display:flex;align-items:center;justify-content:center;box-shadow:var(--soft);flex:0 0 48px}
+.brand-logo img{width:25px;height:25px;filter:brightness(100)}
+.brand h1{font-family:var(--heading);font-size:22px;line-height:1.15}
+.brand p{margin-top:3px;font-size:13px;color:var(--muted)}
+.text-btn{min-height:42px;padding:0 15px;border-radius:13px;background:#fff;border:1px solid var(--border);color:var(--text);font-weight:800;cursor:pointer;font-family:var(--body)}
+.grid{display:grid;grid-template-columns:360px 1fr;gap:18px;align-items:start}
+.panel{background:rgba(255,255,255,.92);border:1px solid rgba(226,232,240,.95);border-radius:22px;box-shadow:var(--shadow);overflow:hidden;backdrop-filter:blur(14px)}
+.profile-head{padding:22px;background:radial-gradient(circle at 0% 0%,rgba(37,99,235,.18),transparent 38%),radial-gradient(circle at 100% 100%,rgba(20,184,166,.17),transparent 38%),#fff;border-bottom:1px solid var(--border)}
+.user-main{display:flex;align-items:center;gap:14px}
+.user-main img{width:76px;height:76px;border-radius:50%;object-fit:cover;border:4px solid #fff;box-shadow:0 0 0 2px rgba(37,99,235,.14),0 12px 24px rgba(37,99,235,.20);flex:0 0 76px}
+.user-main h2{font-family:var(--heading);font-size:20px;line-height:1.2;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.user-main p{margin-top:5px;color:var(--muted);font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.verify-badge{display:inline-flex;align-items:center;gap:6px;margin-top:10px;padding:6px 10px;border-radius:999px;font-size:12px;font-weight:900;line-height:1}
+.verify-badge.verified{background:rgba(37,99,235,.10);color:var(--primary)}
+.verify-badge.unverified{background:rgba(239,68,68,.10);color:var(--danger)}
+.blue-tick{width:16px;height:16px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;background:var(--primary);color:#fff;font-size:11px;font-weight:900}
+.section{padding:18px}.section+.section{border-top:1px solid var(--border)}
+.section-title{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:13px}
+.section-title h3{font-size:15px;font-weight:900}.section-title span{color:var(--muted);font-size:12px;font-weight:800}
+.money-grid{display:grid;grid-template-columns:1fr;gap:10px}
+.money-card{padding:14px;border-radius:16px;border:1px solid var(--border);background:linear-gradient(180deg,#fff,#F8FAFC)}
+.money-card p{color:var(--muted);font-size:12px;font-weight:800}.money-card strong{display:block;margin-top:6px;font-size:22px;font-weight:900}
+.ref-box{display:flex;gap:8px;padding:8px;border:1px solid var(--border);border-radius:15px;background:#fff}
+.ref-box input{flex:1;min-width:0;border:none;outline:none;color:#334155;font-size:13px;font-family:var(--body)}
+.copy-btn{min-height:38px;border:none;border-radius:11px;padding:0 12px;background:var(--gradient);color:#fff;font-weight:900;cursor:pointer}
+.tabs{display:flex;gap:8px;padding:10px;border-bottom:1px solid var(--border);background:#fff;overflow:auto}
+.tab{border:none;min-height:38px;padding:0 13px;border-radius:12px;background:#F1F5F9;color:#334155;font-weight:900;cursor:pointer;white-space:nowrap}
+.tab.active{background:var(--gradient);color:#fff}
+.list{display:none;padding:16px}.list.active{display:block}
+.form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}.input-group.full{grid-column:1/-1}
+label{display:block;margin-bottom:6px;color:#334155;font-size:12px;font-weight:900}
+input,textarea{width:100%;border:1px solid var(--border);border-radius:14px;background:#fff;color:var(--text);outline:none;font-family:var(--body);font-size:14px}
+input{height:46px;padding:0 13px}textarea{min-height:76px;resize:vertical;padding:12px 13px}
+input:focus,textarea:focus{border-color:var(--primary);box-shadow:0 0 0 4px rgba(37,99,235,.10)}
+.save-btn{width:100%;min-height:50px;border:none;border-radius:15px;background:var(--gradient);color:#fff;font-family:var(--body);font-size:15px;font-weight:900;cursor:pointer;margin-top:14px;box-shadow:var(--soft)}
+.save-btn:disabled{opacity:.7;cursor:not-allowed}
+.item{display:grid;grid-template-columns:48px 1fr auto;gap:12px;align-items:center;padding:12px;border:1px solid var(--border);border-radius:16px;background:#fff;margin-bottom:10px}
+.item img{width:48px;height:48px;border-radius:50%;object-fit:cover}
+.item h4{font-size:14px;font-weight:900;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.item p{margin-top:4px;font-size:12px;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.item .verify-badge{margin-top:5px}
+.amount{font-weight:900;color:var(--success);white-space:nowrap}
+.status{display:inline-flex;align-items:center;justify-content:center;min-height:28px;padding:0 9px;border-radius:999px;font-size:11px;font-weight:900;text-transform:uppercase;white-space:nowrap}
+.status.success{background:rgba(22,163,74,.10);color:var(--success)}
+.status.process{background:rgba(245,158,11,.12);color:var(--warning)}
+.status.reject{background:rgba(239,68,68,.10);color:var(--danger)}
+.empty{padding:26px 16px;border:1px dashed #CBD5E1;border-radius:16px;background:#fff;color:var(--muted);text-align:center;font-size:14px;font-weight:800}
+.loader{min-height:55vh;display:flex;align-items:center;justify-content:center;color:var(--muted);font-weight:900}
+.toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%) translateY(20px);background:#0F172A;color:#fff;padding:11px 14px;border-radius:13px;font-size:13px;font-weight:800;opacity:0;pointer-events:none;transition:.25s;z-index:20}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+@media(max-width:860px){
+  body{padding:14px}.grid{grid-template-columns:1fr}.form-grid{grid-template-columns:1fr}
+  .brand h1{font-size:20px}.item{grid-template-columns:44px 1fr}.item .amount,.item .status{grid-column:2/3;justify-self:start}
+}
+</style>
+</head>
+
+<body>
+
+<div class="page" id="app">
+  <div class="loader">Loading profile...</div>
+</div>
+
+<div class="toast" id="toast">Copied</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
+import { getDatabase, ref, get, update, onValue } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDIS8wAIqjSfLaUurqiF2kJe6mcEQLuz8w",
+  authDomain: "sameerswaraj-15d99.firebaseapp.com",
+  databaseURL: "https://sameerswaraj-15d99-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "sameerswaraj-15d99",
+  storageBucket: "sameerswaraj-15d99.firebasestorage.app",
+  messagingSenderId: "1041213217954",
+  appId: "1:1041213217954:web:810f484ecb32148aac4bfb"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getDatabase(app);
+
+const appBox = document.getElementById("app");
+const toast = document.getElementById("toast");
+
+let currentUser = null;
+let currentUserData = {};
+let currentReferrals = [];
+let currentLeads = [];
+let currentRootLeads = {};
+let activeTab = "referrals";
+let pendingLocationAddress = "";
+let currentLocationStatus = "";
+let locationWatchId = null;
+let lastEarningSyncKey = "";
+let locationSuccessShown = false;
+let locationRequestId = 0;
+
+["uid", "userPhoto"].forEach((key) => localStorage.removeItem(key));
+
+function esc(value) {
+  return String(value || "")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
+
+function money(value) {
+  return "₹" + Number(value || 0).toLocaleString("en-IN");
+}
+
+function text(value, fallback = "") {
+  return String(value || fallback || "").trim();
+}
+
+function cleanLeadEmailKey(value) {
+  return String(value || "")
+    .trim()
+    .toLowerCase()
+    .replace(/\./g, ",")
+    .replace(/[#$\/[\]]/g, "-");
+}
+
+function isVerified(data = {}) {
+  return data.authData?.isVerified === true || data.isVerified === true || data.verified === true;
+}
+
+function getBanInfo(data = {}) {
+  const authData = data.authData || {};
+  const banType = authData.banType || data.banType || "none";
+  const banUntil = Number(authData.banUntil || data.banUntil || 0);
+  const permanent = banType === "permanent" || authData.banPermanent === true || data.banPermanent === true;
+  const temporaryActive = banType === "temporary" && banUntil > Date.now();
+  const flaggedActive = (authData.isBanned === true || data.isBanned === true) && banType !== "temporary";
+  const active = permanent || temporaryActive || flaggedActive;
+  return { active, type: permanent ? "permanent" : temporaryActive ? "temporary" : "none", until: temporaryActive ? banUntil : 0 };
+}
+
+async function blockBannedUser(data = {}) {
+  const ban = getBanInfo(data);
+  if (!ban.active) return false;
+  const message = ban.type === "temporary" && ban.until
+    ? `Aapka account ${new Date(ban.until).toLocaleString("en-IN")} tak banned hai.`
+    : "Aapka account banned hai. Admin se contact karein.";
+  alert(message);
+  await signOut(auth).catch(() => {});
+  localStorage.removeItem("loginRedirect");
+  window.location.href = "auth.html";
+  return true;
+}
+
+function getVerifyBadge(data = {}) {
+  if (isVerified(data)) {
+    return `
+      <span class="verify-badge verified">
+        Verified <span class="blue-tick">✓</span>
+      </span>
+    `;
+  }
+
+  return `
+    <span class="verify-badge unverified">
+      Unverified
+    </span>
+  `;
+}
+
+function formatDate(value) {
+  if (!value) return "Not available";
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return "Not available";
+  return date.toLocaleString("en-IN", { dateStyle: "medium", timeStyle: "short" });
+}
+
+function readTotalValue(value, keys = []) {
+  if (typeof value === "number") return value;
+  if (typeof value === "string" && value.trim() !== "") return Number(value) || 0;
+  if (!value || typeof value !== "object") return 0;
+
+  for (const key of keys) {
+    const amount = Number(value[key] || 0);
+    if (amount) return amount;
+  }
+
+  return 0;
+}
+
+function getGoogleProvider(user) {
+  return user.providerData?.find((provider) => provider.providerId === "google.com") || user.providerData?.[0] || {};
+}
+
+function getUserName(user) {
+  const provider = getGoogleProvider(user);
+  return provider.displayName || user.displayName || user.email?.split("@")[0] || "User";
+}
+
+function getUserEmail(user) {
+  const provider = getGoogleProvider(user);
+  return provider.email || user.email || "";
+}
+
+function getLiveUserPhoto(user) {
+  const provider = getGoogleProvider(user);
+  return provider.photoURL || user.photoURL || "";
+}
+
+function getUserPhoto(user) {
+  return getLiveUserPhoto(user) || "assets/favicon.jpg";
+}
+
+function getDisplayName() {
+  return text(currentUserData.authData?.name || getUserName(currentUser), "User");
+}
+
+function getDisplayEmail() {
+  return text(getUserEmail(currentUser) || currentUserData.authData?.email);
+}
+
+function getDisplayPhoto() {
+  return text(getLiveUserPhoto(currentUser) || currentUserData.authData?.photo, "assets/favicon.jpg");
+}
+
+function maskEmail(email) {
+  const cleanEmail = text(email);
+  const parts = cleanEmail.split("@");
+  if (parts.length !== 2 || !parts[0]) return cleanEmail;
+
+  const name = parts[0];
+  const maskedName = name.length <= 2
+    ? name[0] + "*"
+    : name[0] + "*".repeat(Math.min(name.length - 2, 5)) + name[name.length - 1];
+
+  return `${maskedName}@${parts[1]}`;
+}
+
+function maskPhone(phone) {
+  const cleanPhone = String(phone || "").replace(/\D/g, "");
+  if (!cleanPhone) return "";
+  if (cleanPhone.length <= 2) return cleanPhone[0] + "*";
+  return cleanPhone[0] + "*".repeat(Math.max(cleanPhone.length - 2, 1)) + cleanPhone[cleanPhone.length - 1];
+}
+
+function getLeadIdentityKey(lead = {}) {
+  const email = text(lead.emailId || lead.email || lead.Email);
+  if (email) return cleanLeadEmailKey(email);
+  return text(lead.leadId || lead._leadId || lead.id).split("_")[0];
+}
+
+function getRootLeadIdentity(lead = {}) {
+  const key = getLeadIdentityKey(lead);
+  if (!key) return {};
+
+  return currentRootLeads[key] ||
+    currentRootLeads[cleanLeadEmailKey(key)] ||
+    currentRootLeads[key.replaceAll(".", ",")] ||
+    {};
+}
+
+function getLeadIdentityFields(lead = {}) {
+  const rootLead = getRootLeadIdentity(lead);
+
+  return {
+    name: text(lead.name || lead.Name || rootLead.fullName || rootLead.name),
+    email: text(lead.emailId || lead.email || lead.Email || rootLead.emailId || rootLead.email),
+    contactNumber: text(
+      lead.contactNo ||
+      lead.contactNumber ||
+      lead["Contact no"] ||
+      lead.mobile ||
+      lead.contact ||
+      rootLead.contactNo ||
+      rootLead.contactNumber
+    ),
+    aadhaarMobile: text(
+      lead.aadharLinkedNo ||
+      lead.aadhaarLinkedNo ||
+      lead.aadhaarLinkedMobile ||
+      lead.aadhaarLinkedMobileNo ||
+      lead.aadhaarMobile ||
+      lead["Aadhar linked mob no"] ||
+      lead["Aadhar Linked Mob. no."] ||
+      rootLead.aadharLinkedMobNo ||
+      rootLead.aadhaarLinkedMobileNo ||
+      rootLead.aadhaarMobile
+    )
+  };
+}
+
+function getLeadUpdatedDateTime(lead = {}) {
+  return text(
+    lead.updatedDateTime ||
+    lead.updateDateTime ||
+    lead.updatedTime ||
+    lead.dateTime ||
+    lead.addedDateTime ||
+    lead.createdDateTime ||
+    lead.submittedDateTime ||
+    lead.submittedAt ||
+    lead.createdAt ||
+    lead.updatedAt
+  );
+}
+
+function formatLeadDateTime(value) {
+  const cleanValue = text(value);
+  if (!cleanValue) return "";
+  const formatted = formatDate(cleanValue);
+  return formatted === "Not available" ? cleanValue : formatted;
+}
+
+function getReferralName(user = {}) {
+  return text(
+    user.authData?.name ||
+    user.credentialData?.name ||
+    user.name ||
+    user.displayName,
+    "User"
+  );
+}
+
+function getReferralEmail(user = {}) {
+  return text(user.authData?.email || user.email || user.credentialData?.email);
+}
+
+function getReferralPhoto(user = {}) {
+  const name = getReferralName(user);
+  return text(
+    user.authData?.photo ||
+    user.photo ||
+    user.photoURL,
+    `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=2563eb&color=fff`
+  );
+}
+
+function isBlockedCurrentAddress(address) {
+  const cleanAddress = text(address).toLowerCase();
+  return !cleanAddress ||
+    /^lat:\s*-?\d+(\.\d+)?\s*,\s*lng:\s*-?\d+(\.\d+)?$/i.test(cleanAddress) ||
+    cleanAddress.includes("jangpura extension") ||
+    cleanAddress.includes("lajpat nagar") ||
+    cleanAddress.includes("defence colony tehsil") ||
+    cleanAddress.includes("south east delhi") ||
+    cleanAddress.includes("110014");
+}
+
+function getStoredCurrentAddress(data = currentUserData) {
+  const address = text(data.credentialData?.currentAddress);
+
+  return isBlockedCurrentAddress(address) ? "" : address;
+}
+
+function getCurrentAddressUpdatedAt(data = currentUserData) {
+  if (!getStoredCurrentAddress(data)) return "";
+
+  return data.credentialData?.currentAddressUpdatedAt ||
+    data.currentAddressUpdatedAt ||
+    data.lastLocationUpdateAt ||
+    data.lastProfileUpdateAt ||
+    "";
+}
+
+function withCacheBust(url) {
+  if (!url) return "";
+  return url + (url.includes("?") ? "&" : "?") + "t=" + Date.now();
+}
+
+function showToast(message) {
+  toast.textContent = message;
+  toast.classList.add("show");
+  setTimeout(() => toast.classList.remove("show"), 1800);
+}
+
+function getReferralLink() {
+  return `${window.location.origin}/auth.html?ref=${currentUser.uid}`;
+}
+
+function getLeadList(data) {
+  const possible =
+    data.productEarnings?.leads ||
+    data.productLeads ||
+    data.leads ||
+    data.applications ||
+    data.productApplications ||
+    {};
+
+  const leadItems = Array.isArray(possible)
+    ? possible.filter(Boolean).map((item, index) => ({ id: text(item.id, `lead_${index + 1}`), ...item }))
+    : Object.entries(possible).map(([id, item]) => ({ id, ...(item || {}) }));
+
+  return leadItems.flatMap(expandLeadProducts);
+}
+
+function getLeadProducts(lead = {}) {
+  const productRoot = lead.product && typeof lead.product === "object" ? "product" : "products";
+  const productData = productRoot === "product" ? lead.product : lead.products;
+  const products = productData && typeof productData === "object"
+    ? Object.entries(productData).map(([productId, product]) => ({
+      productId,
+      ...(product || {}),
+      appName: product?.appName || productId,
+      productName: product?.productName || productId,
+      product: product?.product || productId
+    }))
+    : [];
+
+  if (!products.length && (lead.appName || lead.productName || lead.product)) {
+    products.push({
+      productId: text(lead.productId, lead.id),
+      appName: lead.appName || lead.productName || lead.product,
+      productName: lead.productName || lead.appName || lead.product,
+      status: lead.status || "process",
+      amount: lead.amount || lead.appAmount || lead.price || lead.productAmount || 0,
+      submittedAt: lead.submittedAt,
+      updatedAt: lead.updatedAt,
+      isVerified: lead.isVerified,
+      verified: lead.verified
+    });
+  }
+
+  return products.filter((product) => {
+    const hidden = product.hidden === true || product.hide === true || product.isHidden === true;
+    return !hidden && (product.appName || product.productName || product.product);
+  });
+}
+
+function expandLeadProducts(lead = {}) {
+  const products = getLeadProducts(lead);
+  const identityFields = getLeadIdentityFields(lead);
+  if (!products.length) return [{ ...lead, ...identityFields }];
+
+  return products.map((product) => ({
+    ...lead,
+    ...product,
+    ...identityFields,
+    leadId: lead.id,
+    id: `${lead.id}_${product.productId || product.appName || product.productName}`,
+  }));
+}
+
+function getLeadEarn(lead) {
+  const status = String(lead.status || "").toLowerCase();
+  if (status !== "success") return 0;
+
+  return Number(
+    lead.amount ||
+    lead.appAmount ||
+    lead.price ||
+    lead.productAmount ||
+    0
+  );
+}
+
+function getProductTotalFromLeads(leads) {
+  return leads.reduce((sum, lead) => sum + getLeadEarn(lead), 0);
+}
+
+function getReferralProductTotal(referral) {
+  const referralLeads = getLeadList(referral);
+  return referralLeads.length
+    ? getProductTotalFromLeads(referralLeads)
+    : readTotalValue(referral.productEarnings, ["totalEarning", "totalEarn"]);
+}
+
+function getReferralProductCommission(referral) {
+  return getReferralProductTotal(referral) * 0.10;
+}
+
+function getReferralPremiumPayments(referral) {
+  const history = referral.payment?.history || {};
+  const items = Array.isArray(history)
+    ? history.filter(Boolean)
+    : Object.values(history || {});
+  const seen = new Set();
+
+  return items.reduce((sum, item = {}) => {
+    const status = String(item.status || "").toLowerCase();
+    const event = String(item.event || "").toLowerCase();
+    const paid = status === "paid" ||
+      status === "active" ||
+      event === "payment.captured" ||
+      event === "order.paid" ||
+      event === "invoice.paid" ||
+      event === "subscription.charged";
+    if (!paid) return sum;
+
+    const paymentKey = text(
+      item.razorpayPaymentId ||
+      item.razorpayOrderId ||
+      item.razorpaySubscriptionId ||
+      item.createdAt
+    );
+    if (paymentKey && seen.has(paymentKey)) return sum;
+    if (paymentKey) seen.add(paymentKey);
+
+    return sum + (Number(item.amount || 0) / 100);
+  }, 0);
+}
+
+function getReferralPremiumCommission(referral) {
+  return getReferralPremiumPayments(referral) * 0.10;
+}
+
+function getReferralTotalCommission(referral) {
+  return getReferralProductCommission(referral) + getReferralPremiumCommission(referral);
+}
+
+function getReferralCommissionTotal(referrals) {
+  return referrals.reduce((sum, item) => {
+    return sum + getReferralTotalCommission(item);
+  }, 0);
+}
+
+async function syncEarningsSummary() {
+  if (!currentUser) return;
+
+  const calculatedProductTotal = getProductTotalFromLeads(currentLeads);
+  const finalProductTotal = currentLeads.length
+    ? calculatedProductTotal
+    : readTotalValue(currentUserData.productEarnings, ["totalEarning", "totalEarn"]);
+  const commissionUsers = {};
+  const commissionTotal = currentReferrals.reduce((sum, item) => {
+    const userProductTotal = getReferralProductTotal(item);
+    const userPremiumTotal = getReferralPremiumPayments(item);
+    const productCommission = userProductTotal * 0.10;
+    const premiumCommission = userPremiumTotal * 0.10;
+    const amount = productCommission + premiumCommission;
+    commissionUsers[item.uid] = {
+      name: getReferralName(item),
+      email: getReferralEmail(item),
+      photo: getReferralPhoto(item),
+      productEarning: userProductTotal,
+      productCommission,
+      premiumEarning: userPremiumTotal,
+      premiumCommission,
+      commission: amount
+    };
+    return sum + amount;
+  }, 0);
+
+  const syncKey = JSON.stringify({
+    productTotal: finalProductTotal,
+    commissionTotal,
+    users: Object.keys(commissionUsers).sort()
+  });
+
+  if (syncKey === lastEarningSyncKey) return;
+  lastEarningSyncKey = syncKey;
+
+  await update(ref(db, `users/${currentUser.uid}`), {
+    "productEarnings/totalEarning": finalProductTotal,
+    "commissionEarnings/totalEarn": commissionTotal,
+    "commissionEarnings/users": commissionUsers,
+    "credentialData/availableAmount": Math.max(
+      finalProductTotal + commissionTotal -
+      Number(currentUserData.credentialData?.withdrawnAmount || currentUserData.credentialData?.withdrawedAmount || 0),
+      0
+    ),
+    totalEarnings: null,
+    availableBalance: null,
+    productLeads: null
+  });
+}
+
+function render() {
+  const name = getDisplayName();
+  const email = getDisplayEmail();
+  const photo = getDisplayPhoto();
+
+  const productTotal = currentLeads.length
+    ? getProductTotalFromLeads(currentLeads)
+    : readTotalValue(currentUserData.productEarnings, ["totalEarning", "totalEarn"]);
+
+  const commissionTotal = currentReferrals.length
+    ? getReferralCommissionTotal(currentReferrals)
+    : readTotalValue(currentUserData.commissionEarnings, ["totalEarning", "totalEarn"]);
+
+  const credentialData = currentUserData.credentialData || {};
+  const withdrawnAmount = Number(
+    credentialData.withdrawnAmount ||
+    credentialData.withdrawedAmount ||
+    0
+  );
+  const totalEarning = productTotal + commissionTotal;
+  const availableBalance = Math.max(totalEarning - withdrawnAmount, 0);
+
+  appBox.innerHTML = `
+    <div class="topbar">
+      <div class="brand">
+        <div class="brand-logo">
+          <img src="https://cdn-icons-png.flaticon.com/512/1828/1828884.png" alt="Logo">
+        </div>
+        <div>
+          <h1>7unici</h1>
+          <p>Referral profile dashboard</p>
+        </div>
+      </div>
+      <button class="text-btn" id="logoutBtn">Logout</button>
+    </div>
+
+    <div class="grid">
+      <aside class="panel">
+        <div class="profile-head">
+          <div class="user-main">
+            <img src="${esc(withCacheBust(photo))}" alt="User" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='assets/favicon.jpg'">
+            <div>
+              <h2>${esc(name)}</h2>
+              <p>${esc(email)}</p>
+              ${getVerifyBadge(currentUserData)}
+            </div>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="section-title">
+            <h3>Earnings</h3>
+            <span>Live</span>
+          </div>
+          <div class="money-grid">
+            <div class="money-card"><p>Product Earnings</p><strong>${money(productTotal)}</strong></div>
+            <div class="money-card"><p>Commission Earnings</p><strong>${money(commissionTotal)}</strong></div>
+            <div class="money-card"><p>Withdrawn Amount</p><strong>${money(withdrawnAmount)}</strong></div>
+            <div class="money-card"><p>Available Balance</p><strong>${money(availableBalance)}</strong></div>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="section-title">
+            <h3>Refer & Earn</h3>
+            <span>10% lifetime</span>
+          </div>
+          <div class="ref-box">
+            <input id="refLink" value="${esc(getReferralLink())}" readonly>
+            <button class="copy-btn" id="copyBtn">Copy</button>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="section-title">
+            <h3>Account</h3>
+          </div>
+          <div class="money-grid">
+            <div class="money-card">
+              <p>Account Created</p>
+              <strong style="font-size:14px">${esc(formatDate(credentialData.accountCreatedDateTime))}</strong>
+            </div>
+            <div class="money-card">
+              <p>Last Login</p>
+              <strong style="font-size:14px">${esc(formatDate(credentialData.lastLoginDateTime))}</strong>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <main class="panel">
+        <div class="tabs">
+          <button class="tab ${activeTab === "profile" ? "active" : ""}" data-tab="profile">Profile Details</button>
+          <button class="tab ${activeTab === "referrals" ? "active" : ""}" data-tab="referrals">Referrals</button>
+          <button class="tab ${activeTab === "leads" ? "active" : ""}" data-tab="leads">Product Leads</button>
+        </div>
+
+        <section class="list ${activeTab === "profile" ? "active" : ""}">
+          ${renderProfileForm()}
+        </section>
+
+        <section class="list ${activeTab === "referrals" ? "active" : ""}">
+          ${renderReferrals()}
+        </section>
+
+        <section class="list ${activeTab === "leads" ? "active" : ""}">
+          ${renderLeads()}
+        </section>
+      </main>
+    </div>
+  `;
+
+  bindEvents();
+}
+
+function renderProfileForm() {
+  const credentialData = currentUserData.credentialData || {};
+  const liveCurrentAddress = getStoredCurrentAddress();
+  const currentAddressUpdatedAt = getCurrentAddressUpdatedAt();
+
+  return `
+    <div id="profileDetails">
+      <div class="form-grid">
+        <div class="input-group">
+          <label>Name</label>
+          <input type="text" id="credentialName" value="${esc(text(credentialData.name))}" readonly>
+        </div>
+        <div class="input-group">
+          <label>Mother Name</label>
+          <input type="text" id="motherName" value="${esc(text(credentialData.motherName))}" readonly>
+        </div>
+        <div class="input-group">
+          <label>Father Name</label>
+          <input type="text" id="fatherName" value="${esc(text(credentialData.fatherName))}" readonly>
+        </div>
+        <div class="input-group">
+          <label>PAN Card Number</label>
+          <input type="text" id="panCardNumber" maxlength="10" value="${esc(text(credentialData.panNo))}" readonly>
+        </div>
+        <div class="input-group">
+          <label>Aadhaar Card Number</label>
+          <input type="text" id="aadhaarCardNumber" maxlength="12" value="${esc(text(credentialData.aadhaarNo))}" readonly>
+        </div>
+        <div class="input-group">
+          <label>Contact Number</label>
+          <input type="tel" id="contactNumber" maxlength="10" value="${esc(text(credentialData.contactNo))}" readonly>
+        </div>
+        <div class="input-group">
+          <label>Aadhaar Linked Mobile</label>
+          <input type="tel" id="aadhaarLinkedMobile" maxlength="10" value="${esc(text(credentialData.aadhaarLinkedMobileNo))}" readonly>
+        </div>
+        <div class="input-group">
+          <label>UPI ID</label>
+          <input type="text" id="upiId" value="${esc(text(credentialData.upiId))}" readonly>
+        </div>
+        <div class="input-group full">
+          <label id="currentAddressUpdatedLabel">Current Address - Updated: ${esc(formatDate(currentAddressUpdatedAt))}</label>
+          <textarea id="currentAddress" readonly>${esc(liveCurrentAddress)}</textarea>
+        </div>
+        <div class="input-group full">
+          <label>Aadhaar Address</label>
+          <textarea id="aadhaarAddress" readonly>${esc(text(credentialData.permanentAddress))}</textarea>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function renderReferrals() {
+  if (!currentReferrals.length) {
+    return `<div class="empty">Abhi koi referred user nahi hai</div>`;
+  }
+
+  return currentReferrals.map((item) => {
+    const name = getReferralName(item);
+    const email = getReferralEmail(item);
+    const photo = getReferralPhoto(item);
+    const productEarning = getReferralProductTotal(item);
+    const premiumEarning = getReferralPremiumPayments(item);
+    const commission = getReferralTotalCommission(item);
+    const baseEarning = productEarning + premiumEarning;
+
+    return `
+      <div class="item">
+        <img src="${esc(withCacheBust(photo))}" alt="${esc(name)}" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='assets/favicon.jpg'">
+        <div>
+          <h4>${esc(name)}</h4>
+          <p>${esc(maskEmail(email))}</p>
+          ${getVerifyBadge(item)}
+        </div>
+        <div>
+          <div class="amount">${money(commission)}</div>
+          <p style="text-align:right">${esc(money(baseEarning))} ka 10%</p>
+        </div>
+      </div>
+    `;
+  }).join("");
+}
+
+function renderLeads() {
+  if (!currentLeads.length) {
+    return `<div class="empty">Abhi koi product lead nahi hai</div>`;
+  }
+
+  return currentLeads.map((lead) => {
+    const status = String(lead.status || "process").toLowerCase();
+    const cleanStatus = status === "success" ? "success" : status === "reject" ? "reject" : "process";
+    const appName = text(lead.appName || lead.productName || lead.product || "Product");
+    const leadName = text(lead.name);
+    const leadEmail = maskEmail(lead.email);
+    const contactNumber = maskPhone(lead.contactNumber);
+    const aadhaarMobile = maskPhone(lead.aadhaarMobile);
+    const updatedDateTime = getLeadUpdatedDateTime(lead);
+
+    return `
+      <div class="item">
+        <img src="https://ui-avatars.com/api/?name=${encodeURIComponent(appName)}&background=14b8a6&color=fff" alt="App">
+        <div>
+          <h4>${esc(appName)}</h4>
+          <p>${esc(leadName)}</p>
+          ${updatedDateTime ? `<p>Updated: ${esc(formatLeadDateTime(updatedDateTime))}</p>` : ""}
+          ${leadEmail ? `<p>Email: ${esc(leadEmail)}</p>` : ""}
+          ${contactNumber ? `<p>Mobile: ${esc(contactNumber)}</p>` : ""}
+          ${aadhaarMobile ? `<p>Aadhaar Mobile: ${esc(aadhaarMobile)}</p>` : ""}
+        </div>
+        <div>
+          <div class="status ${cleanStatus}">${cleanStatus}</div>
+          ${cleanStatus === "success" ? `<div class="amount" style="margin-top:6px;text-align:right">${money(getLeadEarn(lead))}</div>` : ""}
+        </div>
+      </div>
+    `;
+  }).join("");
+}
+
+function bindEvents() {
+  document.querySelectorAll(".tab").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      activeTab = btn.dataset.tab;
+      render();
+    });
+  });
+
+  const logoutBtn = document.getElementById("logoutBtn");
+  if (logoutBtn) {
+    logoutBtn.addEventListener("click", async () => {
+      await signOut(auth);
+      localStorage.removeItem("loginRedirect");
+      window.location.href = "auth.html";
+    });
+  }
+
+  const copyBtn = document.getElementById("copyBtn");
+  if (copyBtn) {
+    copyBtn.addEventListener("click", async () => {
+      const refLink = document.getElementById("refLink").value;
+
+      try {
+        await navigator.clipboard.writeText(refLink);
+        showToast("Referral link copied");
+      } catch (err) {
+        document.getElementById("refLink").select();
+        document.execCommand("copy");
+        showToast("Referral link copied");
+      }
+    });
+  }
+
+  updateCurrentAddressField();
+}
+
+function updateCurrentAddressField() {
+  const currentAddress = document.getElementById("currentAddress");
+  const address = getStoredCurrentAddress();
+  if (!currentAddress) return;
+
+  if (address) {
+    currentAddress.value = address;
+  } else if (currentLocationStatus) {
+    currentAddress.value = currentLocationStatus;
+  }
+}
+
+function updateCurrentAddressUpdatedLabel() {
+  const label = document.getElementById("currentAddressUpdatedLabel");
+  if (label) {
+    label.textContent = `Current Address - Updated: ${formatDate(getCurrentAddressUpdatedAt())}`;
+  }
+}
+
+async function syncCurrentAddressToFirebase(force = false, position = null) {
+  const address = text(pendingLocationAddress);
+  if (!currentUser || isBlockedCurrentAddress(address)) return;
+
+  const now = Date.now();
+  const addressChangedInFirebase = address !== getStoredCurrentAddress();
+  if (!force && !addressChangedInFirebase) return;
+
+  try {
+    await update(ref(db, `users/${currentUser.uid}`), {
+      "credentialData/currentAddress": address,
+      "credentialData/currentAddressUpdatedAt": now,
+      "credentialData/currentLatitude": position?.coords?.latitude ?? null,
+      "credentialData/currentLongitude": position?.coords?.longitude ?? null,
+      "credentialData/currentLocationAccuracy": position?.coords?.accuracy ?? null
+    });
+    pendingLocationAddress = "";
+  } catch (error) {
+    throw error;
+  }
+}
+
+async function clearBlockedCurrentAddressFromFirebase() {
+  if (!currentUser) return;
+
+  const rawAddress = text(currentUserData.credentialData?.currentAddress);
+  if (!rawAddress || !isBlockedCurrentAddress(rawAddress)) return;
+
+  try {
+    await update(ref(db, `users/${currentUser.uid}`), {
+      "credentialData/currentAddress": null,
+      "credentialData/currentAddressUpdatedAt": null
+    });
+  } catch (error) {
+    console.warn("Blocked current address clear failed:", error);
+  }
+}
+
+async function getAddressFromPosition(position) {
+  const latitude = position.coords.latitude;
+  const longitude = position.coords.longitude;
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 10000);
+
+  try {
+    const response = await fetch(
+      `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${latitude}&lon=${longitude}`,
+      { signal: controller.signal }
+    );
+    if (!response.ok) return "";
+
+    const data = await response.json();
+    return text(data.display_name);
+  } catch (error) {
+    return "";
+  } finally {
+    clearTimeout(timeoutId);
+  }
+}
+
+async function handleLocationPosition(position, forceSync = false) {
+  const requestId = ++locationRequestId;
+  currentLocationStatus = "Readable address update ho raha hai...";
+  updateCurrentAddressField();
+  if (!locationSuccessShown) {
+    locationSuccessShown = true;
+    showToast("Location mil gayi. Address update ho raha hai...");
+  }
+
+  const resolvedAddress = await getAddressFromPosition(position);
+  if (requestId !== locationRequestId) return;
+
+  if (!resolvedAddress) {
+    currentLocationStatus = "Address name nahi mil paya. GPS/network on rakhkar page refresh karein.";
+    updateCurrentAddressField();
+    return;
+  }
+
+  if (isBlockedCurrentAddress(resolvedAddress)) {
+    currentLocationStatus = "Purana galat address remove kar diya gaya hai. Fresh address ka wait ho raha hai...";
+    updateCurrentAddressField();
+    clearBlockedCurrentAddressFromFirebase();
+    return;
+  }
+
+  pendingLocationAddress = resolvedAddress;
+  currentLocationStatus = "";
+  syncCurrentAddressToFirebase(forceSync || resolvedAddress !== getStoredCurrentAddress(), position).catch((error) => {
+    currentLocationStatus = "Address Firebase me save nahi ho paya. Dobara try ho raha hai...";
+    updateCurrentAddressField();
+    console.warn("Current address sync failed:", error);
+  });
+}
+
+function handleLocationError(error) {
+  const storedAddress = getStoredCurrentAddress();
+  const denied = error?.code === 1;
+  const unavailable = error?.code === 2;
+  currentLocationStatus = denied
+    ? "Location permission allow karne ke baad current address auto update hoga."
+    : unavailable
+      ? "Location abhi available nahi hai. GPS/network on karke page refresh karein."
+      : "Current location read nahi ho payi. Dobara try ho raha hai...";
+
+  updateCurrentAddressField();
+  showToast(currentLocationStatus);
+  console.warn("Current location failed:", error);
+}
+
+function startLiveLocation() {
+  if (!navigator.geolocation) {
+    currentLocationStatus = "Is browser me location support available nahi hai.";
+    updateCurrentAddressField();
+    return;
+  }
+
+  currentLocationStatus = "Location permission ka wait ho raha hai...";
+  updateCurrentAddressField();
+
+  navigator.geolocation.getCurrentPosition(
+    (position) => handleLocationPosition(position, true),
+    handleLocationError,
+    {
+      enableHighAccuracy: true,
+      maximumAge: 0,
+      timeout: 20000
+    }
+  );
+
+  if (locationWatchId !== null) return;
+
+  locationWatchId = navigator.geolocation.watchPosition(
+    (position) => handleLocationPosition(position),
+    handleLocationError,
+    {
+    enableHighAccuracy: true,
+    maximumAge: 15000,
+    timeout: 20000
+    }
+  );
+}
+
+async function ensureUserBase(user) {
+  const userRef = ref(db, `users/${user.uid}`);
+  const snapshot = await get(userRef);
+  const oldData = snapshot.exists() ? snapshot.val() : {};
+  const now = Date.now();
+
+  const updates = {
+    uid: null,
+    name: null,
+    email: null,
+    photo: null,
+    isVerified: isVerified(oldData),
+    verified: isVerified(oldData),
+    accountCreatedAt: null,
+    lastLoginAt: null,
+    currentAddress: null,
+    currentAddressUpdatedAt: null,
+    lastLocationUpdateAt: null,
+    lastProfileUpdateAt: null,
+    withdrawnAmount: null,
+    withdrawedAmount: null,
+    totalEarnings: null,
+    availableBalance: null,
+    productLeads: null,
+    authData: {
+      ...(oldData.authData || {}),
+      uid: null,
+      userId: null,
+      referrerDisconnectedAt: null,
+      name: getUserName(user),
+      email: getUserEmail(user),
+      photo: getLiveUserPhoto(user) || getUserPhoto(user),
+      isVerified: isVerified(oldData)
+    }
+  };
+
+  updates.credentialData = {
+    ...(oldData.credentialData || {}),
+    name: text(oldData.credentialData?.name || oldData.realName || oldData.name),
+    email: null,
+    photo: null,
+    badge: null,
+    upiId: text(oldData.credentialData?.upiId || oldData.upiId),
+    accountCreatedDateTime: oldData.credentialData?.accountCreatedDateTime || oldData.accountCreatedAt || now,
+    lastLoginDateTime: now,
+    availableAmount: Number(oldData.credentialData?.availableAmount || oldData.availableBalance || 0)
+  };
+
+  if (!oldData.credentialData) {
+    updates.credentialData = {
+      ...updates.credentialData,
+      fatherName: text(oldData.fatherName),
+      motherName: text(oldData.motherName),
+      aadhaarNo: text(oldData.aadhaarCardNumber || oldData.aadhaarNo),
+      panNo: text(oldData.panCardNumber || oldData.panNo),
+      contactNo: text(oldData.contactNumber || oldData.contactNo),
+      aadhaarLinkedMobileNo: text(oldData.aadhaarLinkedMobile || oldData.aadhaarLinkedMobileNo),
+      currentAddress: getStoredCurrentAddress(oldData),
+      currentAddressUpdatedAt: oldData.currentAddressUpdatedAt || 0,
+      permanentAddress: text(oldData.aadhaarAddress || oldData.permanentAddress),
+      upiId: text(oldData.credentialData?.upiId || oldData.upiId),
+      withdrawnAmount: Number(oldData.withdrawnAmount || oldData.withdrawedAmount || 0)
+    };
+  }
+
+  if (!oldData.productEarnings) {
+    updates.productEarnings = { totalEarning: 0, leads: oldData.productLeads || {} };
+  } else if (oldData.productLeads && !oldData.productEarnings?.leads) {
+    updates["productEarnings/leads"] = oldData.productLeads;
+  }
+
+  if (!oldData.commissionEarnings) {
+    updates.commissionEarnings = { totalEarn: 0, users: {} };
+  }
+
+  await update(userRef, updates);
+
+  return {
+    ...oldData,
+    ...updates
+  };
+}
+
+function listenUserData(uid) {
+  onValue(ref(db, `users/${uid}`), async (snapshot) => {
+    currentUserData = snapshot.exists() ? snapshot.val() : {};
+    if (await blockBannedUser(currentUserData)) return;
+    currentLeads = getLeadList(currentUserData);
+    render();
+    updateCurrentAddressField();
+    updateCurrentAddressUpdatedLabel();
+    clearBlockedCurrentAddressFromFirebase();
+    syncEarningsSummary().catch((error) => console.warn("Earnings sync failed:", error));
+  });
+}
+
+function listenRootLeads() {
+  onValue(ref(db, "leads"), (snapshot) => {
+    currentRootLeads = snapshot.exists() ? snapshot.val() : {};
+    currentLeads = getLeadList(currentUserData);
+    render();
+  }, (error) => {
+    console.warn("Root leads lookup failed:", error);
+  });
+}
+
+function listenReferrals(uid) {
+  onValue(ref(db, "users"), (snapshot) => {
+    const list = [];
+
+    snapshot.forEach((child) => {
+      const data = child.val() || {};
+      if (text(data.authData?.referredByUid || data.referredByUid) === uid) {
+        list.push({
+          uid: child.key,
+          ...data
+        });
+      }
+    });
+
+    currentReferrals = list;
+    render();
+    syncEarningsSummary().catch((error) => console.warn("Earnings sync failed:", error));
+  }, (error) => {
+    console.warn("Users referral lookup failed:", error);
+    currentReferrals = [];
+    render();
+  });
+}
+
+onAuthStateChanged(auth, async (user) => {
+  if (!user) {
+    localStorage.setItem("loginRedirect", "profile.html");
+    window.location.href = "auth.html?redirect=profile.html";
+    return;
+  }
+
+  try {
+    await user.reload();
+  } catch (err) {
+    console.log("User reload failed:", err);
+  }
+
+  currentUser = auth.currentUser || user;
+  await currentUser.reload().catch(() => {});
+  currentUser = auth.currentUser || currentUser;
+  currentUserData = await ensureUserBase(currentUser);
+  if (await blockBannedUser(currentUserData)) return;
+  currentLeads = getLeadList(currentUserData);
+
+  render();
+  startLiveLocation();
+
+  listenUserData(currentUser.uid);
+  listenRootLeads();
+listenReferrals(currentUser.uid);
+});
+</script>
+<script type="module" src="assets/premium-access.js"></script>
+
+</body>
+</html>

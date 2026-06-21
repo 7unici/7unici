@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Professional Home</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+
+:root{
+  --color-primary:#2563EB;
+  --color-primary-hover:#1D4ED8;
+  --color-primary-light:#DBEAFE;
+  --color-secondary:#14B8A6;
+  --color-secondary-light:#CCFBF1;
+  --color-background:#F8FAFC;
+  --color-surface:#FFFFFF;
+  --color-hover:#F1F5F9;
+  --text-primary:#0F172A;
+  --text-secondary:#334155;
+  --text-muted:#64748B;
+  --text-white:#FFFFFF;
+  --border-light:#E2E8F0;
+  --gradient-primary:linear-gradient(135deg,#2563EB 0%,#14B8A6 100%);
+  --shadow-sm:0 1px 2px rgba(15,23,42,.06);
+  --shadow-md:0 8px 22px rgba(15,23,42,.08);
+  --shadow-lg:0 18px 42px rgba(15,23,42,.14);
+  --font-heading:'Poppins',sans-serif;
+  --font-body:'Inter',sans-serif;
+}
+
+body{
+  min-height:100vh;
+  background:
+    radial-gradient(circle at 12% 0%,rgba(37,99,235,.12),transparent 32%),
+    radial-gradient(circle at 100% 10%,rgba(20,184,166,.14),transparent 30%),
+    var(--color-background);
+  font-family:var(--font-body);
+  color:var(--text-primary);
+}
+
+.page{
+  width:100%;
+  max-width:1180px;
+  margin:auto;
+  padding:14px;
+}
+
+.hero{
+  position:relative;
+  width:100%;
+  aspect-ratio:16/6;
+  min-height:350px;
+  max-height:520px;
+  overflow:hidden;
+  border-radius:28px;
+  box-shadow:var(--shadow-lg);
+  background:#0F172A;
+}
+
+.hero img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+}
+
+.hero::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    linear-gradient(to bottom,rgba(2,6,23,.48),rgba(2,6,23,.12) 42%,rgba(2,6,23,.82)),
+    radial-gradient(circle at 18% 18%,rgba(37,99,235,.34),transparent 34%),
+    radial-gradient(circle at 82% 22%,rgba(20,184,166,.26),transparent 30%);
+  pointer-events:none;
+}
+
+.header{
+  position:absolute;
+  top:14px;
+  left:14px;
+  right:14px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  z-index:20;
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  min-width:0;
+  padding:8px 12px 8px 8px;
+  border-radius:999px;
+  background:rgba(255,255,255,.16);
+  backdrop-filter:blur(16px);
+  border:1px solid rgba(255,255,255,.22);
+  box-shadow:0 8px 20px rgba(2,6,23,.18);
+}
+
+.brand img{
+  width:36px;
+  height:36px;
+  border-radius:50%;
+  object-fit:cover;
+  border:2px solid rgba(255,255,255,.55);
+  cursor:pointer;
+}
+
+.brand span{
+  color:#fff;
+  font-family:var(--font-heading);
+  font-size:13px;
+  font-weight:800;
+  white-space:nowrap;
+  cursor:pointer;
+}
+
+.socials{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  overflow-x:auto;
+  scrollbar-width:none;
+  max-width:68%;
+}
+
+.socials::-webkit-scrollbar{display:none;}
+
+.socials a{
+  width:38px;
+  height:38px;
+  min-width:38px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:50%;
+  background:rgba(255,255,255,.15);
+  backdrop-filter:blur(14px);
+  border:1px solid rgba(255,255,255,.18);
+  transition:.25s ease;
+}
+
+.socials a:hover{
+  background:rgba(255,255,255,.26);
+  transform:translateY(-2px);
+}
+
+.socials img{
+  width:18px;
+  height:18px;
+}
+
+.hero-content{
+  position:absolute;
+  left:18px;
+  right:18px;
+  bottom:18px;
+  z-index:20;
+}
+
+.hero-title{
+  max-width:650px;
+  color:#fff;
+  font-family:var(--font-heading);
+  font-size:34px;
+  line-height:1.08;
+}
+
+.hero-sub{
+  margin-top:8px;
+  color:#E2E8F0;
+  font-size:14px;
+  font-weight:600;
+}
+
+.controls{
+  margin-top:16px;
+  display:grid;
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(180px,280px);
+  gap:10px;
+  align-items:center;
+}
+
+.controls.no-sub{
+  grid-template-columns:minmax(0,1fr) minmax(180px,280px);
+}
+
+#catBox,
+#subBox{
+  display:flex;
+  gap:8px;
+  overflow-x:auto;
+  scrollbar-width:none;
+  min-width:0;
+  scroll-behavior:smooth;
+}
+
+#catBox{justify-content:flex-start;}
+#subBox{justify-content:center;}
+
+#catBox::-webkit-scrollbar,
+#subBox::-webkit-scrollbar{display:none;}
+
+#catBox button,
+#subBox button{
+  border:none;
+  outline:none;
+  padding:10px 15px;
+  border-radius:999px;
+  background:rgba(255,255,255,.16);
+  backdrop-filter:blur(14px);
+  border:1px solid rgba(255,255,255,.18);
+  color:#fff;
+  font-size:13px;
+  font-weight:700;
+  white-space:nowrap;
+  cursor:pointer;
+  transition:.25s ease;
+  flex-shrink:0;
+}
+
+#catBox button.active,
+#subBox button.active{
+  background:#fff;
+  color:var(--color-primary);
+}
+
+.search{
+  width:100%;
+  height:42px;
+  border:none;
+  outline:none;
+  padding:0 16px;
+  border-radius:999px;
+  background:rgba(255,255,255,.16);
+  backdrop-filter:blur(14px);
+  border:1px solid rgba(255,255,255,.18);
+  color:#fff;
+  font-size:13px;
+  font-weight:700;
+}
+
+.search::placeholder{color:#E2E8F0;}
+
+.tool-shell{
+  margin-top:16px;
+  background:rgba(255,255,255,.72);
+  backdrop-filter:blur(18px);
+  border:1px solid rgba(226,232,240,.9);
+  border-radius:24px;
+  box-shadow:var(--shadow-md);
+  padding:12px;
+}
+
+.section-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  padding:4px 4px 14px;
+}
+
+.section-head h2{
+  font-family:var(--font-heading);
+  font-size:18px;
+}
+
+.section-head span{
+  padding:7px 11px;
+  border-radius:999px;
+  background:var(--color-primary-light);
+  color:var(--color-primary-hover);
+  font-size:12px;
+  font-weight:900;
+  white-space:nowrap;
+}
+
+.cards{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:14px;
+}
+
+.card{
+  position:relative;
+  aspect-ratio:16/9;
+  border-radius:20px;
+  overflow:hidden;
+  cursor:pointer;
+  box-shadow:var(--shadow-sm);
+  transition:.3s ease;
+  background:#fff;
+  border:1px solid var(--border-light);
+}
+
+.card:hover{
+  transform:translateY(-4px);
+  box-shadow:var(--shadow-lg);
+}
+
+.card img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+  transition:.5s ease;
+}
+
+.card:hover img{
+  transform:scale(1.05);
+}
+
+.card::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(to top,rgba(2,6,23,.88),rgba(2,6,23,.08));
+}
+
+.card-content{
+  position:absolute;
+  left:14px;
+  right:14px;
+  bottom:13px;
+  z-index:2;
+  color:#fff;
+}
+
+.card-title{
+  font-size:15px;
+  font-weight:800;
+  font-family:var(--font-heading);
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+
+.card-meta{
+  margin-top:4px;
+  display:flex;
+  gap:6px;
+  flex-wrap:wrap;
+}
+
+.card-meta span{
+  padding:4px 8px;
+  border-radius:999px;
+  background:rgba(255,255,255,.16);
+  backdrop-filter:blur(10px);
+  font-size:10px;
+  font-weight:800;
+  color:#E2E8F0;
+}
+
+.empty{
+  grid-column:1/-1;
+  padding:26px;
+  text-align:center;
+  color:var(--text-muted);
+  font-weight:800;
+  background:#fff;
+  border:1px dashed var(--border-light);
+  border-radius:18px;
+}
+
+@media(max-width:860px){
+  .cards{grid-template-columns:repeat(2,1fr);}
+  .controls{grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(150px,220px);gap:7px;}
+  .controls.no-sub{grid-template-columns:minmax(0,1fr) minmax(150px,220px);}
+  #catBox button,#subBox button{padding:9px 11px;font-size:11px;}
+  .search{height:38px;padding:0 12px;font-size:11px;}
+}
+
+@media(max-width:700px){
+  .page{padding:10px;}
+  .hero{min-height:auto;height:auto;aspect-ratio:16/9;border-radius:22px;}
+  .header{top:10px;left:10px;right:10px;}
+  .brand{max-width:158px;padding:7px 10px 7px 7px;}
+  .brand img{width:32px;height:32px;}
+  .brand span{overflow:hidden;text-overflow:ellipsis;font-size:12px;}
+  .socials{max-width:44%;gap:6px;}
+  .socials a{width:34px;height:34px;min-width:34px;}
+  .socials img{width:16px;height:16px;}
+  .hero-content{left:10px;right:10px;bottom:10px;}
+  .hero-title{font-size:18px;max-width:100%;}
+  .hero-sub{margin-top:4px;font-size:10px;}
+  .controls{margin-top:8px;grid-template-columns:minmax(0,1fr) minmax(0,1fr) 125px;gap:5px;}
+  .controls.no-sub{grid-template-columns:minmax(0,1fr) 125px;}
+  #catBox,#subBox{gap:5px;}
+  #catBox button,#subBox button{padding:7px 9px;font-size:10px;}
+  .search{height:32px;padding:0 9px;font-size:10px;}
+  .tool-shell{margin-top:12px;border-radius:20px;padding:10px;}
+  .section-head{padding:4px 2px 12px;}
+  .section-head h2{font-size:16px;}
+  .cards{grid-template-columns:repeat(2,1fr);gap:10px;}
+  .card{border-radius:16px;}
+  .card-content{left:10px;right:10px;bottom:10px;}
+  .card-title{font-size:12px;}
+  .card-meta span{font-size:9px;padding:3px 6px;}
+}
+</style>
+</head>
+
+<body>
+<main class="page">
+  <section class="hero">
+    <img id="slider" src="https://picsum.photos/1200/700?1" alt="Banner">
+
+    <div class="header">
+      <div class="brand">
+        <img id="photoBtn" src="assets/favicon.jpg" alt="Profile">
+        <span id="logoTextBtn">7unici.com</span>
+      </div>
+
+      <div class="socials">
+        <a href="#"><img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" alt="YouTube"></a>
+        <a href="#"><img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" alt="Facebook"></a>
+        <a href="#"><img src="https://cdn-icons-png.flaticon.com/512/733/733558.png" alt="Twitter"></a>
+        <a href="#"><img src="https://cdn-icons-png.flaticon.com/512/733/733579.png" alt="Telegram"></a>
+        <a href="#"><img src="https://cdn-icons-png.flaticon.com/512/732/732200.png" alt="Mail"></a>
+        <a href="#"><img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" alt="LinkedIn"></a>
+        <a href="#"><img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="Instagram"></a>
+      </div>
+    </div>
+
+    <div class="hero-content">
+      <h1 class="hero-title">Tools for faster professional work</h1>
+      <p class="hero-sub">Search by category, pick the right tool, and open it instantly.</p>
+
+      <div class="controls no-sub" id="controls">
+        <div id="catBox"></div>
+        <div id="subBox"></div>
+        <input type="text" id="search" class="search" placeholder="Search">
+      </div>
+    </div>
+  </section>
+
+  <section class="tool-shell">
+    <div class="section-head">
+      <h2>Professional Tools</h2>
+      <span id="resultCount">0 Tools</span>
+    </div>
+
+    <div class="cards" id="cardsBox"></div>
+  </section>
+</main>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
+import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-database.js";
+
+const accountFirebaseConfig = {
+  apiKey: "AIzaSyDIS8wAIqjSfLaUurqiF2kJe6mcEQLuz8w",
+  authDomain: "sameerswaraj-15d99.firebaseapp.com",
+  databaseURL: "https://sameerswaraj-15d99-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "sameerswaraj-15d99",
+  storageBucket: "sameerswaraj-15d99.firebasestorage.app",
+  messagingSenderId: "1041213217954",
+  appId: "1:1041213217954:web:810f484ecb32148aac4bfb",
+  measurementId: "G-KLS7W2RRSK"
+};
+
+const toolsFirebaseConfig = {
+  apiKey: "AIzaSyBIM-LCxldSMBaD-Y_92j7_NYQyb-GzEF0",
+  authDomain: "sameerswaraj-f1fd6.firebaseapp.com",
+  databaseURL: "https://sameerswaraj-f1fd6-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "sameerswaraj-f1fd6",
+  storageBucket: "sameerswaraj-f1fd6.firebasestorage.app",
+  messagingSenderId: "803938424023",
+  appId: "1:803938424023:web:b850c1fefcf73011480c92",
+  measurementId: "G-X4HVPQ352E"
+};
+
+const accountApp = initializeApp(accountFirebaseConfig);
+const toolsApp = initializeApp(toolsFirebaseConfig, "toolsData");
+const auth = getAuth(accountApp);
+const accountDatabase = getDatabase(accountApp);
+const database = getDatabase(toolsApp);
+
+const slider = document.getElementById("slider");
+const controls = document.getElementById("controls");
+const catBox = document.getElementById("catBox");
+const subBox = document.getElementById("subBox");
+const cardsBox = document.getElementById("cardsBox");
+const search = document.getElementById("search");
+const resultCount = document.getElementById("resultCount");
+
+["uid", "userName", "userEmail", "userPhoto"].forEach((key) => localStorage.removeItem(key));
+
+const slides = [
+  "https://picsum.photos/1200/700?1",
+  "https://picsum.photos/1200/700?2",
+  "https://picsum.photos/1200/700?3"
+];
+
+let slideIndex = 0;
+
+setInterval(() => {
+  if (!slider) return;
+  slideIndex = (slideIndex + 1) % slides.length;
+  slider.src = slides[slideIndex];
+}, 3000);
+
+let cards = [];
+let banUnsubscribe = null;
+
+let activeCat = "All";
+let activeSub = "All";
+
+function getGoogleProvider(user) {
+  return user.providerData?.find((provider) => provider.providerId === "google.com") || user.providerData?.[0] || {};
+}
+
+function getLiveUserData(user) {
+  const provider = getGoogleProvider(user);
+  const email = provider.email || user.email || "";
+  const name = provider.displayName || user.displayName || email.split("@")[0] || "User";
+  const photo = provider.photoURL || user.photoURL || "assets/favicon.jpg";
+  return { name, email, photo };
+}
+
+function withCacheBust(url) {
+  if (!url) return "";
+  return url + (url.includes("?") ? "&" : "?") + "t=" + Date.now();
+}
+
+function applyLiveUser(user) {
+  if (!user) return;
+  const data = getLiveUserData(user);
+
+  document.querySelectorAll("#photoBtn,.brand-logo img,.brand img").forEach((img) => {
+    if (!img || img.tagName !== "IMG") return;
+    img.referrerPolicy = "no-referrer";
+    img.alt = "Profile photo";
+    img.src = withCacheBust(data.photo);
+    img.title = data.email || data.name;
+  });
+}
+
+function getBanInfo(data = {}) {
+  const authData = data.authData || {};
+  const banType = authData.banType || data.banType || "none";
+  const banUntil = Number(authData.banUntil || data.banUntil || 0);
+  const permanent = banType === "permanent" || authData.banPermanent === true || data.banPermanent === true;
+  const temporaryActive = banType === "temporary" && banUntil > Date.now();
+  const flaggedActive = (authData.isBanned === true || data.isBanned === true) && banType !== "temporary";
+  const active = permanent || temporaryActive || flaggedActive;
+  return { active, type: permanent ? "permanent" : temporaryActive ? "temporary" : "none", until: temporaryActive ? banUntil : 0 };
+}
+
+async function blockBannedUser(data = {}) {
+  const ban = getBanInfo(data);
+  if (!ban.active) return false;
+  const message = ban.type === "temporary" && ban.until
+    ? `Aapka account ${new Date(ban.until).toLocaleString("en-IN")} tak banned hai.`
+    : "Aapka account banned hai. Admin se contact karein.";
+  alert(message);
+  await signOut(auth).catch(() => {});
+  localStorage.removeItem("loginRedirect");
+  window.location.href = "auth.html";
+  return true;
+}
+
+function listenForBan(uid) {
+  if (banUnsubscribe) banUnsubscribe();
+  banUnsubscribe = onValue(ref(accountDatabase, `users/${uid}`), (snapshot) => {
+    blockBannedUser(snapshot.exists() ? snapshot.val() : {}).catch((error) => console.warn("Ban check failed:", error));
+  }, (error) => console.warn("Ban check failed:", error));
+}
+
+function redirectToLogin() {
+  const page = location.pathname.split("/").pop() || "index.html";
+  const destination = page + location.search + location.hash;
+  localStorage.setItem("loginRedirect", destination);
+  location.replace("auth.html?redirect=" + encodeURIComponent(destination));
+}
+
+function escapeHtml(value) {
+  return String(value || "")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
+
+function titleCase(value) {
+  return String(value || "")
+    .replace(/[-_]+/g, " ")
+    .replace(/\s+/g, " ")
+    .trim()
+    .replace(/\w\S*/g, (word) => word.charAt(0).toUpperCase() + word.slice(1));
+}
+
+function isToolNode(value) {
+  return Boolean(
+    value &&
+    typeof value === "object" &&
+    (
+      "title" in value ||
+      "name" in value ||
+      "link" in value ||
+      "url" in value ||
+      "image" in value ||
+      "thumbnail" in value
+    )
+  );
+}
+
+function getToolSource(data) {
+  if (!data || typeof data !== "object") return {};
+  return data.tools || data.tool || data.cards || data.card || data;
+}
+
+function makeTool(value, key = "", category = "", sub = "") {
+  const title = value.title || value.name || titleCase(key) || "Untitled Tool";
+  const categoryName = value.category || value.cat || category || "Tools";
+  const subName = value.sub || value.subcategory || value.type || sub || "General";
+
+  return {
+    title: titleCase(title),
+    category: titleCase(categoryName),
+    sub: titleCase(subName),
+    link: value.link || value.url || value.page || "#",
+    image: value.image || value.thumbnail || value.logo || "https://picsum.photos/400/250?tool"
+  };
+}
+
+function normalizeTools(data) {
+  const source = getToolSource(data);
+  const list = [];
+
+  function addNode(value, key, category, sub) {
+    if (!value || typeof value !== "object") return;
+
+    if (isToolNode(value)) {
+      if (value.hidden === true || value.hide === true || value.isHidden === true) return;
+      list.push(makeTool(value, key, category, sub));
+      return;
+    }
+
+    Object.entries(value).forEach(([childKey, childValue]) => {
+      if (isToolNode(childValue)) {
+        addNode(childValue, childKey, category || key, sub);
+        return;
+      }
+
+      if (childValue && typeof childValue === "object") {
+        Object.entries(childValue).forEach(([toolKey, toolValue]) => {
+          addNode(toolValue, toolKey, category || key, sub || childKey);
+        });
+      }
+    });
+  }
+
+  if (Array.isArray(source)) {
+    source.forEach((item, index) => addNode(item, String(index), "", ""));
+  } else {
+    Object.entries(source).forEach(([key, value]) => addNode(value, key, "", ""));
+  }
+
+  return list;
+}
+
+function renderCat() {
+  if (!catBox) return;
+
+  catBox.innerHTML = "";
+  const categories = ["All", ...new Set(cards.map((card) => card.category).filter(Boolean))];
+
+  categories.forEach((category) => {
+    const button = document.createElement("button");
+    button.innerText = category;
+
+    if (activeCat === category) {
+      button.classList.add("active");
+    }
+
+    button.onclick = () => {
+      activeCat = category;
+      activeSub = "All";
+      renderCat();
+      renderSub();
+      renderCards();
+    };
+
+    catBox.appendChild(button);
+  });
+}
+
+function renderSub() {
+  if (!subBox || !controls) return;
+
+  subBox.innerHTML = "";
+
+  if (activeCat === "All") {
+    subBox.style.display = "none";
+    controls.classList.add("no-sub");
+    return;
+  }
+
+  subBox.style.display = "flex";
+  controls.classList.remove("no-sub");
+
+  const subs = [
+    "All",
+    ...new Set(cards.filter((card) => card.category === activeCat).map((card) => card.sub).filter(Boolean))
+  ];
+
+  subs.forEach((sub) => {
+    const button = document.createElement("button");
+    button.innerText = sub;
+
+    if (activeSub === sub) {
+      button.classList.add("active");
+    }
+
+    button.onclick = () => {
+      activeSub = sub;
+      renderSub();
+      renderCards();
+    };
+
+    subBox.appendChild(button);
+  });
+}
+
+function renderCards() {
+  if (!cardsBox) return;
+
+  const key = search?.value?.toLowerCase() || "";
+
+  const filtered = cards.filter((card) => {
+    return (activeCat === "All" || card.category === activeCat) &&
+      (activeSub === "All" || card.sub === activeSub) &&
+      (
+        card.title.toLowerCase().includes(key) ||
+        card.category.toLowerCase().includes(key) ||
+        card.sub.toLowerCase().includes(key)
+      );
+  });
+
+  if (resultCount) {
+    resultCount.textContent = `${filtered.length} ${filtered.length === 1 ? "Tool" : "Tools"}`;
+  }
+
+  cardsBox.innerHTML = filtered.map((card) => `
+    <div class="card" data-link="${escapeHtml(card.link)}">
+      <img src="${escapeHtml(card.image)}" alt="${escapeHtml(card.title)}">
+      <div class="card-content">
+        <div class="card-title">${escapeHtml(card.title)}</div>
+        <div class="card-meta">
+          <span>${escapeHtml(card.category)}</span>
+          <span>${escapeHtml(card.sub)}</span>
+        </div>
+      </div>
+    </div>
+  `).join("") || `<div class="empty">No tool found</div>`;
+
+  document.querySelectorAll(".card").forEach((card) => {
+    card.addEventListener("click", () => {
+      const link = card.dataset.link;
+
+      if (!link || link === "#") {
+        alert("Coming soon");
+        return;
+      }
+
+      window.open(link, "_blank");
+    });
+  });
+}
+
+search?.addEventListener("input", renderCards);
+
+document.getElementById("photoBtn")?.addEventListener("click", (event) => {
+  event.stopPropagation();
+  window.location.href = "profile.html";
+});
+
+document.getElementById("logoTextBtn")?.addEventListener("click", (event) => {
+  event.stopPropagation();
+  window.location.href = "main.html";
+});
+
+function loadTools() {
+  if (cardsBox) {
+    cardsBox.innerHTML = `<div class="empty">Loading tools...</div>`;
+  }
+
+  onValue(ref(database, "tools"), (snapshot) => {
+    cards = normalizeTools(snapshot.val());
+
+    if (activeCat !== "All" && !cards.some((card) => card.category === activeCat)) {
+      activeCat = "All";
+      activeSub = "All";
+    }
+
+    if (activeSub !== "All" && !cards.some((card) => card.category === activeCat && card.sub === activeSub)) {
+      activeSub = "All";
+    }
+
+    renderCat();
+    renderSub();
+    renderCards();
+  }, (error) => {
+    console.error(error);
+
+    if (cardsBox) {
+      cardsBox.innerHTML = `<div class="empty">Tools load nahi ho paaye</div>`;
+    }
+
+    if (resultCount) {
+      resultCount.textContent = "0 Tools";
+    }
+  });
+}
+
+onAuthStateChanged(auth, async (user) => {
+  if (!user) {
+    redirectToLogin();
+    return;
+  }
+
+  try {
+    await user.reload();
+  } catch (error) {
+    console.warn("User reload failed:", error);
+  }
+
+  const liveUser = auth.currentUser || user;
+  applyLiveUser(liveUser);
+  listenForBan(liveUser.uid);
+});
+
+loadTools();
+</script>
+<script type="module" src="assets/premium-access.js"></script>
+
+</body>
+</html>
