@@ -415,7 +415,7 @@ body{
 
     <div class="header">
       <div class="brand">
-        <img id="photoBtn" src="assets/favicon.jpg" alt="Profile">
+        <img id="photoBtn" src="assets/favicon.svg" alt="Profile">
         <span id="logoTextBtn">7unici.com</span>
       </div>
 
@@ -523,7 +523,7 @@ function getLiveUserData(user) {
   const provider = getGoogleProvider(user);
   const email = provider.email || user.email || "";
   const name = provider.displayName || user.displayName || email.split("@")[0] || "User";
-  const photo = provider.photoURL || user.photoURL || "assets/favicon.jpg";
+  const photo = provider.photoURL || user.photoURL || "assets/favicon.svg";
   return { name, email, photo };
 }
 
