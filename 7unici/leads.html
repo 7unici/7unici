@@ -188,7 +188,7 @@ input:focus{border-color:var(--color-primary);box-shadow:0 0 0 4px rgba(37,99,23
 
 <div class="referral-card">
   <div class="profile">
-    <img id="refPhoto" src="assets/favicon.jpg" alt="Referrer" referrerpolicy="no-referrer">
+    <img id="refPhoto" src="assets/favicon.svg" alt="Referrer" referrerpolicy="no-referrer">
     <div class="profile-info">
       <h3 id="refName">7unici</h3>
       <p id="refEmail" class="ref-email">Email not available</p>
@@ -815,9 +815,9 @@ async function loadReferrer() {
     nameEl.textContent = "7unici";
     emailEl.textContent = "Email not available";
     if (usePhotoFallback) {
-      photoEl.src = "assets/favicon.jpg";
+      photoEl.src = "assets/favicon.svg";
     } else {
-      photoEl.src = "assets/favicon.jpg";
+      photoEl.src = "assets/favicon.svg";
     }
     setAppStatus({ isVerified: false });
   };
@@ -837,12 +837,12 @@ async function loadReferrer() {
     photoEl.referrerPolicy = "no-referrer";
     photoEl.onerror = () => {
       photoEl.onerror = null;
-      photoEl.src = "assets/favicon.jpg";
+      photoEl.src = "assets/favicon.svg";
     };
     if (photo) {
       photoEl.src = addCacheBust(photo);
     } else {
-      photoEl.src = "assets/favicon.jpg";
+      photoEl.src = "assets/favicon.svg";
     }
     setAppStatus(user);
   };
